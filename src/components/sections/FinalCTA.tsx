@@ -1,10 +1,18 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { openWhatsApp } from '../../lib/whatsapp'
+import RevealText from '../ui/RevealText'
 
 export default function FinalCTA() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  const trustItems = [
+    { icon: '🔒', text: 'Nessun contratto' },
+    { icon: '⚡', text: 'Risposta in 24h' },
+    { icon: '🎯', text: 'Solo soluzioni su misura' },
+    { icon: '🇮🇹', text: 'Made in Italy' },
+  ]
 
   return (
     <section className="section-padding relative overflow-hidden" style={{ background: '#080b12' }}>
@@ -16,85 +24,94 @@ export default function FinalCTA() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_30%_50%,rgba(124,58,237,0.07)_0%,transparent_70%)]" />
       </div>
 
-      {/* Orbital decorative rings */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true">
+      {/* Orbital decorative rings — scale in on scroll */}
+      <motion.div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={inView ? { scale: 1, opacity: 1 } : {}}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
+        aria-hidden="true"
+      >
         <div className="w-[500px] h-[500px] rounded-full border border-[#00d4ff]/6 animate-spin-slow" />
         <div className="absolute inset-8 rounded-full border border-[#7c3aed]/6 animate-spin-reverse" />
         <div className="absolute inset-16 rounded-full border border-[#00d4ff]/4 animate-spin-slow" style={{ animationDuration: '30s' }} />
-      </div>
+      </motion.div>
 
       <div className="container-max relative z-10" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center max-w-3xl mx-auto"
-        >
+        <div className="text-center max-w-3xl mx-auto">
           {/* Label */}
-          <span className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-8">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] as [number,number,number,number] }}
+            className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-8"
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-[#00d4ff] animate-pulse-glow" />
             <span className="text-xs text-[#8892a4] font-medium tracking-wide uppercase">
               Inizia ora — è gratuito
             </span>
-          </span>
+          </motion.span>
 
-          {/* Headline */}
-          <h2 className="font-display text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] text-white mb-6">
-            Vuoi vedere come potrebbe
-            <br />
-            <span className="text-gradient">funzionare per il tuo business?</span>
+          {/* Headline — word-by-word reveal */}
+          <h2 className="font-display text-[clamp(2.2rem,5vw,4rem)] leading-[1.1] text-white mb-4">
+            <RevealText text="Vuoi vedere come potrebbe" inView={inView} delay={0} className="block" />
+          </h2>
+          <h2 className="font-display text-[clamp(2.2rem,5vw,4rem)] leading-[1.1] mb-6">
+            <RevealText text="funzionare per il tuo business?" inView={inView} delay={5} className="text-gradient" />
           </h2>
 
           {/* Subtext */}
-          <p className="text-[#8892a4] text-lg md:text-xl leading-relaxed mb-10">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
+            className="text-[#8892a4] text-lg md:text-xl leading-relaxed mb-10"
+          >
             Scrivici su WhatsApp. In pochi minuti valutiamo insieme la situazione
             e ti mostriamo cosa può fare un sistema ZOVEN per te.
             <br />
             <span className="text-white font-medium">Nessun impegno. Solo chiarezza.</span>
-          </p>
+          </motion.p>
 
           {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <button
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.button
               onClick={() => openWhatsApp('generic')}
               className="wa-btn text-base px-8 py-4 w-full sm:w-auto"
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.75, ease: [0.34, 1.56, 0.64, 1] as [number,number,number,number] }}
             >
               <WaIcon />
               Apri WhatsApp
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => openWhatsApp('demo')}
               className="btn-ghost text-base px-8 py-4 w-full sm:w-auto"
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.88, ease: [0.34, 1.56, 0.64, 1] as [number,number,number,number] }}
             >
               Richiedi demo gratuita
-            </button>
-          </motion.div>
+            </motion.button>
+          </div>
 
           {/* Trust row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-6 mt-12"
-          >
-            {[
-              { icon: '🔒', text: 'Nessun contratto' },
-              { icon: '⚡', text: 'Risposta in 24h' },
-              { icon: '🎯', text: 'Solo soluzioni su misura' },
-              { icon: '🇮🇹', text: 'Made in Italy' },
-            ].map((t) => (
-              <div key={t.text} className="flex items-center gap-2 text-[#8892a4] text-sm">
+          <div className="flex flex-wrap items-center justify-center gap-6 mt-12">
+            {trustItems.map((t, i) => (
+              <motion.div
+                key={t.text}
+                initial={{ opacity: 0, y: 12 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1 + i * 0.08, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
+                className="flex items-center gap-2 text-[#8892a4] text-sm"
+              >
                 <span>{t.icon}</span>
                 <span>{t.text}</span>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   )

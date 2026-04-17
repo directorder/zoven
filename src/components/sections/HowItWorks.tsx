@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { openWhatsApp } from '../../lib/whatsapp'
+import { lineGrow } from '../../lib/animations'
 
 const steps = [
   {
@@ -87,48 +88,88 @@ export default function HowItWorks() {
 
       <div className="container-max" ref={ref}>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block text-xs text-[#00d4ff] font-semibold uppercase tracking-widest mb-4">
-            Come funziona
-          </span>
-          <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-tight text-white mb-5">
-            Dal sito al cliente:
-            <br />
-            <span className="text-gradient">6 passi automatizzati.</span>
-          </h2>
-          <p className="text-[#8892a4] text-lg max-w-xl mx-auto leading-relaxed">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="flex items-center justify-center gap-3 mb-4"
+          >
+            <motion.span variants={lineGrow} initial="hidden" animate={inView ? 'visible' : 'hidden'}
+              className="block h-px w-8 bg-gradient-to-r from-transparent to-[#00d4ff]" style={{ originX: 0 }} />
+            <span className="text-xs text-[#00d4ff] font-semibold uppercase tracking-widest">Come funziona</span>
+            <motion.span variants={lineGrow} initial="hidden" animate={inView ? 'visible' : 'hidden'}
+              transition={{ delay: 0.1 }}
+              className="block h-px w-8 bg-gradient-to-l from-transparent to-[#00d4ff]" style={{ originX: 1 }} />
+          </motion.div>
+
+          <div className="overflow-hidden mb-1">
+            <motion.h2
+              className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-tight text-white"
+              initial={{ y: '110%', opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number,number,number,number], delay: 0.1 }}
+            >
+              Dal sito al cliente:
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden mb-5">
+            <motion.h2
+              className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-tight"
+              initial={{ y: '110%', opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number,number,number,number], delay: 0.22 }}
+            >
+              <span className="text-gradient">6 passi automatizzati.</span>
+            </motion.h2>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.38, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
+            className="text-[#8892a4] text-lg max-w-xl mx-auto leading-relaxed"
+          >
             Il sistema funziona anche mentre dormi. Ogni visitatore diventa una lead qualificata
             prima che tu risponda.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Steps */}
-          <div className="space-y-5">
+          <div className="space-y-0">
             {steps.map((s, i) => (
               <motion.div
                 key={s.n}
-                initial={{ opacity: 0, x: -30 }}
+                initial={{ opacity: 0, x: -40 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: i * 0.09, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.65, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
                 className="flex items-start gap-5 group"
               >
-                {/* Number + connector */}
+                {/* Number + animated connector */}
                 <div className="flex flex-col items-center flex-shrink-0">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#00d4ff] group-hover:border-[#00d4ff]/30 transition-colors">
+                  <motion.div
+                    initial={{ scale: 0, rotate: -15 }}
+                    animate={inView ? { scale: 1, rotate: 0 } : {}}
+                    transition={{ duration: 0.45, delay: 0.2 + i * 0.1, ease: [0.34, 1.56, 0.64, 1] as [number,number,number,number] }}
+                    className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#00d4ff] group-hover:border-[#00d4ff]/30 transition-colors"
+                  >
                     {s.icon}
-                  </div>
+                  </motion.div>
                   {i < steps.length - 1 && (
-                    <div className="w-px flex-1 min-h-[2rem] bg-gradient-to-b from-white/10 to-transparent mt-2" />
+                    <div className="relative w-px flex-1 min-h-[2rem] mt-2 overflow-hidden">
+                      <div className="absolute inset-0 bg-white/5" />
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-b from-[#00d4ff]/40 to-transparent"
+                        initial={{ scaleY: 0, originY: 0 }}
+                        animate={inView ? { scaleY: 1 } : {}}
+                        transition={{ duration: 0.4, delay: 0.3 + i * 0.1, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
+                      />
+                    </div>
                   )}
                 </div>
                 {/* Text */}
-                <div className="pb-2">
+                <div className="pb-5">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="text-[10px] text-[#00d4ff] font-bold tracking-widest">{s.n}</span>
                     <h3 className="text-white font-semibold text-base">{s.title}</h3>
@@ -157,11 +198,11 @@ export default function HowItWorks() {
           {/* WhatsApp mockup */}
           <motion.div
             ref={chatRef}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={chatInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, scale: 0.92, y: 30, rotateX: 8 }}
+            animate={chatInView ? { opacity: 1, scale: 1, y: 0, rotateX: 0 } : {}}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
             className="glass-card rounded-3xl overflow-hidden max-w-sm mx-auto lg:mx-0 lg:ml-auto w-full"
-            style={{ border: '1px solid rgba(37,211,102,0.15)' }}
+            style={{ perspective: 1000, transformStyle: 'preserve-3d', border: '1px solid rgba(37,211,102,0.15)' }}
           >
             {/* WhatsApp header */}
             <div className="bg-[#075e54] px-5 py-4 flex items-center gap-3">

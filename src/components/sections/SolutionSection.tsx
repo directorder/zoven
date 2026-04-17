@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion'
 import WhatsAppButton from '../ui/WhatsAppButton'
 import { openWhatsApp } from '../../lib/whatsapp'
 import type { FunnelIntent } from '../../lib/whatsapp'
+import { lineGrow } from '../../lib/animations'
 
 const services = [
   {
@@ -66,8 +67,11 @@ const services = [
 
 const container = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 const item = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+  hidden: { opacity: 0, y: 28, scale: 0.94, filter: 'blur(8px)' },
+  visible: {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  },
 }
 
 export default function SolutionSection() {
@@ -81,25 +85,52 @@ export default function SolutionSection() {
 
       <div className="container-max" ref={ref}>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block text-xs text-[#00d4ff] font-semibold uppercase tracking-widest mb-4">
-            La soluzione
-          </span>
-          <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-tight text-white mb-5">
-            Costruiamo sistemi
-            <br />
-            <span className="text-gradient">che generano clienti.</span>
-          </h2>
-          <p className="text-[#8892a4] text-lg max-w-xl mx-auto leading-relaxed">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="flex items-center justify-center gap-3 mb-4"
+          >
+            <motion.span variants={lineGrow} initial="hidden" animate={inView ? 'visible' : 'hidden'}
+              className="block h-px w-8 bg-gradient-to-r from-transparent to-[#00d4ff]" style={{ originX: 0 }} />
+            <span className="text-xs text-[#00d4ff] font-semibold uppercase tracking-widest">La soluzione</span>
+            <motion.span variants={lineGrow} initial="hidden" animate={inView ? 'visible' : 'hidden'}
+              transition={{ delay: 0.1 }}
+              className="block h-px w-8 bg-gradient-to-l from-transparent to-[#00d4ff]" style={{ originX: 1 }} />
+          </motion.div>
+
+          <div className="overflow-hidden mb-1">
+            <motion.h2
+              className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-tight text-white"
+              initial={{ y: '110%', opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number,number,number,number], delay: 0.1 }}
+            >
+              Costruiamo sistemi
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden mb-5">
+            <motion.h2
+              className="font-display text-[clamp(2rem,4.5vw,3.5rem)] leading-tight"
+              initial={{ y: '110%', opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number,number,number,number], delay: 0.22 }}
+            >
+              <span className="text-gradient">che generano clienti.</span>
+            </motion.h2>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.38, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
+            className="text-[#8892a4] text-lg max-w-xl mx-auto leading-relaxed"
+          >
             Non siti vetrina. Non template. Sistemi digitali costruiti attorno al tuo processo
             di acquisizione clienti.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         {/* Services grid */}
         <motion.div
