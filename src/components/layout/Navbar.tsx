@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { openWhatsApp } from '../../lib/whatsapp'
 
@@ -54,6 +55,12 @@ export default function Navbar() {
                 {l.label}
               </a>
             ))}
+            <Link
+              to="/demo"
+              className="text-sm text-[#00d4ff] hover:text-white transition-colors duration-200 font-semibold"
+            >
+              Demo
+            </Link>
           </div>
 
           {/* Desktop CTA */}
@@ -106,6 +113,13 @@ export default function Navbar() {
                   {l.label}
                 </a>
               ))}
+              <Link
+                to="/demo"
+                onClick={() => setMenuOpen(false)}
+                className="text-[#00d4ff] text-sm font-semibold py-1 transition-colors hover:text-white"
+              >
+                Demo
+              </Link>
               <div className="flex flex-col gap-2 pt-2 border-t border-white/5">
                 <button onClick={() => openWhatsApp('demo')} className="btn-ghost text-sm">Richiedi demo</button>
                 <button onClick={() => openWhatsApp('generic')} className="wa-btn text-sm">
