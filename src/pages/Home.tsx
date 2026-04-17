@@ -3,10 +3,13 @@ import Footer from '../components/layout/Footer'
 import HeroSection from '../components/sections/HeroSection'
 import ProblemSection from '../components/sections/ProblemSection'
 import SolutionSection from '../components/sections/SolutionSection'
+import ResultsSection from '../components/sections/ResultsSection'
 import HowItWorks from '../components/sections/HowItWorks'
+import LiveDemo from '../components/sections/LiveDemo'
 import Showcase from '../components/sections/Showcase'
 import WhyZoven from '../components/sections/WhyZoven'
 import FinalCTA from '../components/sections/FinalCTA'
+import MarqueeStrip from '../components/ui/MarqueeStrip'
 import FloatingWA from '../components/ui/FloatingWA'
 
 export default function Home() {
@@ -15,9 +18,12 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
+        <MarqueeStrip />
         <ProblemSection />
         <SolutionSection />
+        <ResultsSection />
         <HowItWorks />
+        <LiveDemo />
         <Showcase />
         <WhyZoven />
         <FinalCTA />
