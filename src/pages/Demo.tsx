@@ -54,7 +54,7 @@ const demos = [
     brand: 'AURORA CLINIC',
     location: 'Milano',
     tagline: 'Sistema di prenotazione intelligente per cliniche estetiche: booking online, dashboard e simulazione 3D.',
-    accent: '#1f4fff',
+    accent: '#c4607a',
     accentSoft: 'rgba(31,79,255,0.09)',
     accentBorder: 'rgba(31,79,255,0.22)',
     accentGlow: 'rgba(31,79,255,0.14)',

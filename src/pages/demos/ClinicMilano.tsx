@@ -11,14 +11,17 @@ import DemoNav from '../../components/demo/DemoNav'
 import PoweredByZoven from '../../components/demo/PoweredByZoven'
 import { openWhatsApp } from '../../lib/whatsapp'
 
-// ── TOKENS ────────────────────────────────────────────────────
-const A     = '#1f4fff'
-const AG    = (o: number) => `rgba(31,79,255,${o})`
-const BG    = '#08080d'
-const CARD  = 'rgba(255,255,255,0.03)'
-const BORD  = 'rgba(255,255,255,0.08)'
-const ABORD = 'rgba(31,79,255,0.28)'
-const MUTED = '#8892a4'
+// ── TOKENS — light, feminine, luxury clinic ───────────────────
+const A     = '#c4607a'
+const AG    = (o: number) => `rgba(196,96,122,${o})`
+const BG    = '#fdf8f6'
+const BG_ALT = '#f5ede9'
+const BG_DARK = '#130f12'
+const TEXT  = '#1a0f1f'
+const CARD  = '#ffffff'
+const BORD  = 'rgba(196,96,122,0.14)'
+const ABORD = 'rgba(196,96,122,0.32)'
+const MUTED = '#9a808c'
 
 const ease   = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const spring = { type: 'spring' as const, stiffness: 280, damping: 24 }
@@ -127,18 +130,17 @@ function HeroClinic() {
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{ background: BG, paddingTop: 80 }}
     >
-      {/* Grid */}
+      {/* Soft floral texture overlay */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `linear-gradient(${BORD} 1px,transparent 1px),linear-gradient(90deg,${BORD} 1px,transparent 1px)`,
-        backgroundSize: '64px 64px',
+        backgroundImage: `radial-gradient(circle at 80% 20%, ${AG(0.07)} 0%, transparent 50%),
+          radial-gradient(circle at 10% 80%, rgba(232,160,180,0.05) 0%, transparent 45%)`,
       }} />
 
-      {/* Radial glow */}
+      {/* Delicate grid */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: `radial-gradient(ellipse 80% 70% at 60% 50%, ${AG(0.14)} 0%, transparent 65%)`,
-      }} />
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: `radial-gradient(ellipse 40% 40% at 20% 60%, rgba(124,58,237,0.07) 0%, transparent 70%)`,
+        backgroundImage: `linear-gradient(${BORD} 1px,transparent 1px),linear-gradient(90deg,${BORD} 1px,transparent 1px)`,
+        backgroundSize: '72px 72px',
+        opacity: 0.5,
       }} />
 
       <div className="container-max w-full relative z-10 py-16">
@@ -150,9 +152,9 @@ function HeroClinic() {
               initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
               transition={{ ...spring, delay: 0.1 }}
               className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-widest"
-              style={{ background: CARD, border: `1px solid ${ABORD}`, color: A }}
+              style={{ background: AG(0.08), border: `1px solid ${ABORD}`, color: A }}
             >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse-glow" style={{ background: A, boxShadow: `0 0 8px ${A}` }} />
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse-glow" style={{ background: A, boxShadow: `0 0 8px ${AG(0.6)}` }} />
               Aurora Clinic · Medicina Estetica Avanzata
             </motion.div>
 
@@ -160,19 +162,19 @@ function HeroClinic() {
             <motion.h1
               initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }}
               transition={fade(0.2)}
-              className="font-display leading-[1.04] tracking-tight text-white mb-6"
-              style={{ fontSize: 'clamp(2.6rem,5.5vw,4.5rem)' }}
+              className="font-display leading-[1.06] tracking-tight mb-6"
+              style={{ fontSize: 'clamp(2.6rem,5.5vw,4.5rem)', color: TEXT }}
             >
-              La medicina
+              La bellezza
               <br />
-              estetica che{' '}
+              che meriti,{' '}
               <span style={{
-                background: `linear-gradient(135deg, ${A} 0%, #00d4ff 100%)`,
+                background: `linear-gradient(135deg, ${A} 0%, #e8628a 100%)`,
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}>
-                ti meriti.
+                adesso.
               </span>
             </motion.h1>
 
@@ -185,7 +187,7 @@ function HeroClinic() {
             >
               Trattamenti certificati. Medici specializzati.
               <br />
-              <span className="text-white font-medium">Risultati misurabili, garantiti.</span>
+              <span style={{ color: TEXT }} className="font-medium">Risultati naturali e duraturi.</span>
             </motion.p>
 
             {/* CTAs */}
@@ -197,14 +199,14 @@ function HeroClinic() {
               <button
                 onClick={() => openWhatsApp('generic')}
                 className="wa-btn text-sm px-6 py-3"
-                style={{ background: `linear-gradient(135deg, ${A}, #0040dd)`, boxShadow: `0 4px 24px ${AG(0.45)}` }}
+                style={{ background: `linear-gradient(135deg, ${A}, #e8628a)`, boxShadow: `0 4px 24px ${AG(0.35)}` }}
               >
-                Prenota ora
+                Prenota consulto gratuito
               </button>
               <a
                 href="#trattamenti"
                 className="btn-ghost text-sm px-6 py-3"
-                style={{ borderColor: ABORD, color: '#a0b0ff' }}
+                style={{ borderColor: ABORD, color: A }}
               >
                 Scopri i trattamenti
               </a>
@@ -214,11 +216,11 @@ function HeroClinic() {
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               transition={fade(0.6)}
-              className="flex items-center gap-6"
+              className="flex items-center gap-8"
             >
-              {[['247+', 'Prenotazioni'], ['98%', 'Soddisfazione'], ['12+', 'Anni esperienza']].map(([v, l], i) => (
+              {[['247+', 'Pazienti soddisfatte'], ['98%', 'Soddisfazione'], ['12+', 'Anni di esperienza']].map(([v, l]) => (
                 <div key={l} className="flex flex-col gap-0.5">
-                  <span className="font-display text-2xl font-extrabold" style={{ color: i === 0 ? A : '#fff' }}>{v}</span>
+                  <span className="font-display text-2xl font-extrabold" style={{ color: A }}>{v}</span>
                   <span className="text-xs" style={{ color: MUTED }}>{l}</span>
                 </div>
               ))}
@@ -229,7 +231,7 @@ function HeroClinic() {
           <div className="flex-1 relative w-full h-[500px] hidden lg:block">
             {/* Ambient glow */}
             <div className="absolute inset-0 pointer-events-none" style={{
-              background: `radial-gradient(ellipse at center, ${AG(0.18)} 0%, transparent 65%)`,
+              background: `radial-gradient(ellipse at 60% 50%, ${AG(0.12)} 0%, transparent 65%)`,
             }} />
 
             {/* Booking card */}
@@ -240,23 +242,22 @@ function HeroClinic() {
             >
               <div className="p-5 rounded-2xl w-72"
                 style={{
-                  background: 'rgba(10,10,20,0.92)', border: `1px solid ${ABORD}`,
-                  backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-                  boxShadow: `0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px ${AG(0.1)}`,
+                  background: CARD,
+                  border: `1px solid ${ABORD}`,
+                  boxShadow: `0 24px 60px ${AG(0.12)}, 0 4px 16px rgba(0,0,0,0.06)`,
                 }}
               >
                 <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: MUTED }}>Prossima consulenza</p>
-                <p className="text-white font-bold text-xl mb-1">Domani, 10:30</p>
+                <p className="font-bold text-xl mb-1" style={{ color: TEXT }}>Domani, 10:30</p>
                 <p className="text-sm mb-4" style={{ color: MUTED }}>Dr.ssa Laura Ferretti</p>
                 <div className="h-px mb-4" style={{ background: BORD }} />
                 <div className="flex items-center justify-between">
                   <span className="text-sm" style={{ color: MUTED }}>Filler Labbra · Studio A</span>
                   <span className="px-2.5 py-1 rounded-full text-xs font-semibold"
-                    style={{ background: AG(0.15), border: `1px solid ${ABORD}`, color: A }}>
+                    style={{ background: AG(0.1), border: `1px solid ${ABORD}`, color: A }}>
                     Confermata
                   </span>
                 </div>
-                {/* Live dot */}
                 <span className="absolute top-4 right-4 w-2 h-2 rounded-full animate-pulse-glow"
                   style={{ background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
               </div>
@@ -270,23 +271,22 @@ function HeroClinic() {
             >
               <div className="p-5 rounded-2xl w-60"
                 style={{
-                  background: 'rgba(10,10,20,0.92)', border: `1px solid ${BORD}`,
-                  backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-                  boxShadow: '0 24px 60px rgba(0,0,0,0.65)',
+                  background: CARD,
+                  border: `1px solid ${BORD}`,
+                  boxShadow: `0 20px 50px rgba(0,0,0,0.08), 0 4px 12px ${AG(0.08)}`,
                 }}
               >
                 <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: MUTED }}>Questo mese</p>
                 <div className="flex gap-4 mb-4">
-                  <div><p className="text-2xl font-bold text-white">247</p><p className="text-xs" style={{ color: MUTED }}>Prenotazioni</p></div>
+                  <div><p className="text-2xl font-bold" style={{ color: TEXT }}>247</p><p className="text-xs" style={{ color: MUTED }}>Prenotazioni</p></div>
                   <div><p className="text-2xl font-bold" style={{ color: A }}>98%</p><p className="text-xs" style={{ color: MUTED }}>Soddisfazione</p></div>
                 </div>
-                {/* Mini sparkline */}
-                <div className="h-8 rounded-md overflow-hidden" style={{ background: AG(0.08) }}>
+                <div className="h-8 rounded-md overflow-hidden" style={{ background: AG(0.06) }}>
                   <svg viewBox="0 0 120 32" className="w-full h-full" preserveAspectRatio="none">
                     <polyline points="0,28 20,22 40,18 60,10 80,14 100,6 120,10"
                       fill="none" stroke={A} strokeWidth="2" strokeLinecap="round" />
                     <polyline points="0,32 0,28 20,22 40,18 60,10 80,14 100,6 120,10 120,32"
-                      fill={AG(0.2)} strokeWidth="0" />
+                      fill={AG(0.15)} strokeWidth="0" />
                   </svg>
                 </div>
               </div>
@@ -300,12 +300,12 @@ function HeroClinic() {
             >
               <div className="p-4 rounded-xl w-52"
                 style={{
-                  background: 'rgba(10,10,20,0.92)', border: `1px solid ${BORD}`,
-                  backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-                  boxShadow: '0 16px 40px rgba(0,0,0,0.6)',
+                  background: CARD,
+                  border: `1px solid ${BORD}`,
+                  boxShadow: `0 12px 32px rgba(0,0,0,0.07)`,
                 }}
               >
-                <p className="font-semibold text-white text-sm mb-0.5">Botulino Frontale</p>
+                <p className="font-semibold text-sm mb-0.5" style={{ color: TEXT }}>Botulino Frontale</p>
                 <p className="text-xs mb-3" style={{ color: MUTED }}>45 min · Dr. Romano</p>
                 <div className="h-px mb-3" style={{ background: BORD }} />
                 <p className="font-bold text-base" style={{ color: A }}>€ 290</p>
@@ -314,9 +314,9 @@ function HeroClinic() {
 
             {/* Orbit ring decoration */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none"
-              style={{ border: `1px solid ${AG(0.08)}` }} />
+              style={{ border: `1px solid ${AG(0.1)}` }} />
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full pointer-events-none animate-spin-slow"
-              style={{ border: `1px dashed ${AG(0.05)}` }} />
+              style={{ border: `1px dashed ${AG(0.07)}` }} />
           </div>
         </div>
       </div>
@@ -333,7 +333,7 @@ function TreatmentsClinic() {
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
-    <section id="trattamenti" className="section-padding" style={{ background: BG }}>
+    <section id="trattamenti" className="section-padding" style={{ background: BG_ALT }}>
       <div className="container-max">
         <FadeUp className="mb-4">
           <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: A }}>
@@ -341,7 +341,7 @@ function TreatmentsClinic() {
           </span>
         </FadeUp>
         <FadeUp delay={0.08} className="mb-12">
-          <h2 className="font-display text-[clamp(2rem,4vw,3.2rem)] leading-tight tracking-tight text-white">
+          <h2 className="font-display text-[clamp(2rem,4vw,3.2rem)] leading-tight tracking-tight" style={{ color: TEXT }}>
             Trattamenti certificati<br />per ogni obiettivo
           </h2>
         </FadeUp>
@@ -355,22 +355,22 @@ function TreatmentsClinic() {
                   onHoverStart={() => setHovered(t.id)}
                   onHoverEnd={() => setHovered(null)}
                   animate={{
-                    borderColor: isHov ? ABORD : BORD,
+                    borderColor: isHov ? A : BORD,
                     boxShadow: isHov
-                      ? `0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px ${AG(0.2)}, 0 0 40px ${AG(0.08)}`
-                      : '0 4px 20px rgba(0,0,0,0.3)',
+                      ? `0 12px 40px ${AG(0.12)}, 0 0 0 1px ${ABORD}`
+                      : `0 2px 12px rgba(0,0,0,0.04)`,
                     y: isHov ? -4 : 0,
                   }}
                   transition={{ duration: 0.25 }}
                   className="relative overflow-hidden p-5 rounded-2xl cursor-default"
                   style={{
-                    background: isHov ? `rgba(20,28,60,0.8)` : CARD,
+                    background: CARD,
                     border: `1px solid ${BORD}`,
                   }}
                 >
                   {/* Top shimmer line on hover */}
                   <motion.div
-                    className="absolute top-0 inset-x-0 h-px"
+                    className="absolute top-0 inset-x-0 h-[2px]"
                     animate={{
                       background: isHov
                         ? `linear-gradient(90deg, transparent, ${A}, transparent)`
@@ -382,18 +382,18 @@ function TreatmentsClinic() {
                   {/* Tag */}
                   {t.tag && (
                     <span className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full"
-                      style={{ background: AG(0.15), color: A, border: `1px solid ${ABORD}` }}>
+                      style={{ background: AG(0.1), color: A, border: `1px solid ${ABORD}` }}>
                       {t.tag}
                     </span>
                   )}
 
                   {/* Icon */}
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-4"
-                    style={{ background: isHov ? AG(0.2) : AG(0.1), transition: 'background 0.25s' }}>
+                    style={{ background: isHov ? AG(0.12) : AG(0.07), transition: 'background 0.25s' }}>
                     {t.emoji}
                   </div>
 
-                  <h3 className="font-display font-bold text-white text-lg mb-1.5">{t.name}</h3>
+                  <h3 className="font-display font-bold text-lg mb-1.5" style={{ color: TEXT }}>{t.name}</h3>
                   <p className="text-sm leading-relaxed mb-4" style={{ color: MUTED }}>{t.desc}</p>
 
                   <div className="h-px mb-4" style={{ background: BORD }} />
@@ -413,7 +413,7 @@ function TreatmentsClinic() {
                     <button
                       onClick={() => openWhatsApp('generic')}
                       className="w-full py-2 rounded-xl text-xs font-semibold text-white transition-all"
-                      style={{ background: A, boxShadow: `0 4px 16px ${AG(0.4)}` }}
+                      style={{ background: `linear-gradient(135deg, ${A}, #e8628a)`, boxShadow: `0 4px 16px ${AG(0.3)}` }}
                     >
                       Prenota questo trattamento →
                     </button>
@@ -469,7 +469,7 @@ function BookingWidget() {
   }
 
   return (
-    <section ref={sectionRef} style={{ background: '#06070f', borderTop: `1px solid ${BORD}`, borderBottom: `1px solid ${BORD}` }}>
+    <section ref={sectionRef} style={{ background: BG_DARK, borderTop: `1px solid rgba(196,96,122,0.12)`, borderBottom: `1px solid rgba(196,96,122,0.12)` }}>
       <div className="container-max py-20">
         <div className="flex flex-col lg:flex-row gap-16 items-start">
           {/* Left — description */}
@@ -485,7 +485,7 @@ function BookingWidget() {
               La tua<br />consulenza<br />
               <span style={{ color: A }}>in 3 passi.</span>
             </h2>
-            <p className="text-sm leading-relaxed mb-8" style={{ color: MUTED }}>
+            <p className="text-sm leading-relaxed mb-8" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Scegli il trattamento, seleziona data e orario, e conferma.
               Ricevi la conferma su WhatsApp.
             </p>
@@ -507,7 +507,7 @@ function BookingWidget() {
                     >
                       {done ? '✓' : s.n}
                     </motion.div>
-                    <span className="text-sm font-medium" style={{ color: active ? '#fff' : done ? '#22c55e' : MUTED }}>
+                    <span className="text-sm font-medium" style={{ color: active ? '#fff' : done ? '#22c55e' : 'rgba(255,255,255,0.4)' }}>
                       {s.label}
                     </span>
                   </div>
@@ -522,7 +522,7 @@ function BookingWidget() {
             transition={fade(0.2)}
             className="flex-1 w-full min-h-[420px] rounded-2xl overflow-hidden relative"
             style={{
-              background: CARD, border: `1px solid ${BORD}`,
+              background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(196,96,122,0.18)`,
               boxShadow: `0 32px 80px rgba(0,0,0,0.5), 0 0 40px ${AG(0.05)}`,
             }}
           >
@@ -533,7 +533,7 @@ function BookingWidget() {
                   animate={{ width: `${(step / 3) * 100}%` }}
                   transition={{ duration: 0.5, ease }}
                   className="h-full rounded-full"
-                  style={{ background: `linear-gradient(90deg, ${A}, #00d4ff)`, boxShadow: `0 0 10px ${AG(0.6)}` }}
+                  style={{ background: `linear-gradient(90deg, ${A}, #e8628a)`, boxShadow: `0 0 10px ${AG(0.6)}` }}
                 />
               </div>
             )}
@@ -545,7 +545,7 @@ function BookingWidget() {
                   <motion.div key="s1" variants={stepVariants} initial="enter" animate="center" exit="exit"
                     transition={{ duration: 0.35, ease }}>
                     <h3 className="font-display text-xl font-bold text-white mb-2">Quale trattamento?</h3>
-                    <p className="text-sm mb-6" style={{ color: MUTED }}>Seleziona il trattamento che desideri prenotare.</p>
+                    <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.45)' }}>Seleziona il trattamento che desideri prenotare.</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
                       {TREATMENTS.map((t) => {
                         const sel = selectedTreatment === t.id
@@ -556,15 +556,15 @@ function BookingWidget() {
                             whileHover={{ scale: 1.015 }} whileTap={{ scale: 0.985 }}
                             className="flex items-center gap-3 p-3.5 rounded-xl text-left transition-all"
                             style={{
-                              background: sel ? `rgba(20,30,80,0.8)` : 'rgba(255,255,255,0.03)',
-                              border: `1px solid ${sel ? ABORD : BORD}`,
+                              background: sel ? AG(0.15) : 'rgba(255,255,255,0.03)',
+                              border: `1px solid ${sel ? ABORD : 'rgba(255,255,255,0.07)'}`,
                               boxShadow: sel ? `0 0 20px ${AG(0.15)}` : 'none',
                             }}
                           >
                             <span className="text-xl">{t.emoji}</span>
                             <div className="min-w-0">
                               <p className="font-semibold text-sm text-white leading-tight">{t.name}</p>
-                              <p className="text-xs mt-0.5" style={{ color: sel ? A : MUTED }}>{t.price}</p>
+                              <p className="text-xs mt-0.5" style={{ color: sel ? A : 'rgba(255,255,255,0.35)' }}>{t.price}</p>
                             </div>
                             {sel && (
                               <motion.span
@@ -583,8 +583,8 @@ function BookingWidget() {
                       whileTap={{ scale: 0.97 }}
                       className="w-full py-3.5 rounded-xl font-semibold text-white transition-all"
                       style={{
-                        background: selectedTreatment ? `linear-gradient(135deg, ${A}, #0040dd)` : 'rgba(255,255,255,0.06)',
-                        color: selectedTreatment ? '#fff' : MUTED,
+                        background: selectedTreatment ? `linear-gradient(135deg, ${A}, #e8628a)` : 'rgba(255,255,255,0.06)',
+                        color: selectedTreatment ? '#fff' : 'rgba(255,255,255,0.3)',
                         cursor: selectedTreatment ? 'pointer' : 'not-allowed',
                         boxShadow: selectedTreatment ? `0 4px 20px ${AG(0.4)}` : 'none',
                       }}
@@ -619,9 +619,9 @@ function BookingWidget() {
                             whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                             className="flex-shrink-0 flex flex-col items-center gap-1 px-4 py-3 rounded-xl font-medium text-sm"
                             style={{
-                              background: sel ? `rgba(20,30,80,0.9)` : 'rgba(255,255,255,0.04)',
-                              border: `1px solid ${sel ? ABORD : BORD}`,
-                              color: sel ? '#fff' : MUTED,
+                              background: sel ? AG(0.18) : 'rgba(255,255,255,0.04)',
+                              border: `1px solid ${sel ? ABORD : 'rgba(255,255,255,0.07)'}`,
+                              color: sel ? '#fff' : 'rgba(255,255,255,0.4)',
                               boxShadow: sel ? `0 0 16px ${AG(0.2)}` : 'none',
                             }}
                           >
@@ -642,9 +642,9 @@ function BookingWidget() {
                             whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
                             className="py-3 rounded-xl font-semibold text-sm"
                             style={{
-                              background: sel ? `rgba(20,30,80,0.9)` : 'rgba(255,255,255,0.04)',
-                              border: `1px solid ${sel ? ABORD : BORD}`,
-                              color: sel ? '#fff' : MUTED,
+                              background: sel ? AG(0.18) : 'rgba(255,255,255,0.04)',
+                              border: `1px solid ${sel ? ABORD : 'rgba(255,255,255,0.07)'}`,
+                              color: sel ? '#fff' : 'rgba(255,255,255,0.4)',
                               boxShadow: sel ? `0 0 16px ${AG(0.2)}` : 'none',
                             }}
                           >
@@ -660,8 +660,8 @@ function BookingWidget() {
                       whileTap={{ scale: 0.97 }}
                       className="w-full py-3.5 rounded-xl font-semibold text-white"
                       style={{
-                        background: selectedTime ? `linear-gradient(135deg, ${A}, #0040dd)` : 'rgba(255,255,255,0.06)',
-                        color: selectedTime ? '#fff' : MUTED,
+                        background: selectedTime ? `linear-gradient(135deg, ${A}, #e8628a)` : 'rgba(255,255,255,0.06)',
+                        color: selectedTime ? '#fff' : 'rgba(255,255,255,0.3)',
                         cursor: selectedTime ? 'pointer' : 'not-allowed',
                         boxShadow: selectedTime ? `0 4px 20px ${AG(0.4)}` : 'none',
                       }}
@@ -683,11 +683,11 @@ function BookingWidget() {
                     {/* Summary mini card */}
                     <div className="p-4 rounded-xl mb-6" style={{ background: AG(0.08), border: `1px solid ${ABORD}` }}>
                       <div className="grid grid-cols-3 gap-3 text-sm">
-                        <div><p className="text-xs mb-0.5" style={{ color: MUTED }}>Trattamento</p>
+                        <div><p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Trattamento</p>
                           <p className="text-white font-semibold leading-tight">{TREATMENTS.find(t => t.id === selectedTreatment)?.name}</p></div>
-                        <div><p className="text-xs mb-0.5" style={{ color: MUTED }}>Data</p>
+                        <div><p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Data</p>
                           <p className="text-white font-semibold">{DAYS[selectedDay]?.label} {DAYS[selectedDay]?.num}</p></div>
-                        <div><p className="text-xs mb-0.5" style={{ color: MUTED }}>Orario</p>
+                        <div><p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Orario</p>
                           <p className="font-bold" style={{ color: A }}>{selectedTime}</p></div>
                       </div>
                     </div>
@@ -698,19 +698,19 @@ function BookingWidget() {
                         { label: 'WhatsApp', value: phone, setter: setPhone, placeholder: '+39 333 000 0000', type: 'tel' },
                       ].map((field) => (
                         <div key={field.label}>
-                          <label className="text-xs font-medium mb-1.5 block" style={{ color: MUTED }}>{field.label}</label>
+                          <label className="text-xs font-medium mb-1.5 block" style={{ color: 'rgba(255,255,255,0.4)' }}>{field.label}</label>
                           <input
                             type={field.type}
                             value={field.value}
                             onChange={(e) => field.setter(e.target.value)}
                             placeholder={field.placeholder}
-                            className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-gray-600 outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-[rgba(255,255,255,0.2)] outline-none transition-all"
                             style={{
                               background: 'rgba(255,255,255,0.04)',
-                              border: `1px solid ${BORD}`,
+                              border: `1px solid rgba(255,255,255,0.07)`,
                             }}
                             onFocus={(e) => { e.currentTarget.style.borderColor = ABORD; e.currentTarget.style.boxShadow = `0 0 0 3px ${AG(0.1)}` }}
-                            onBlur={(e) => { e.currentTarget.style.borderColor = BORD; e.currentTarget.style.boxShadow = 'none' }}
+                            onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; e.currentTarget.style.boxShadow = 'none' }}
                           />
                         </div>
                       ))}
@@ -722,7 +722,7 @@ function BookingWidget() {
                       whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
                       className="w-full py-3.5 rounded-xl font-semibold text-white relative overflow-hidden"
                       style={{
-                        background: `linear-gradient(135deg, ${A}, #0040dd)`,
+                        background: `linear-gradient(135deg, ${A}, #e8628a)`,
                         boxShadow: `0 4px 24px ${AG(0.45)}`,
                         opacity: !name.trim() || !phone.trim() ? 0.5 : 1,
                       }}
@@ -734,7 +734,7 @@ function BookingWidget() {
                         </span>
                       ) : 'Conferma prenotazione →'}
                     </motion.button>
-                    <p className="text-center text-xs mt-3" style={{ color: MUTED }}>
+                    <p className="text-center text-xs mt-3" style={{ color: 'rgba(255,255,255,0.3)' }}>
                       Riceverai una conferma su WhatsApp entro 5 minuti.
                     </p>
                   </motion.div>
@@ -761,25 +761,25 @@ function BookingWidget() {
                       Prenotazione confermata!
                     </motion.h3>
                     <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={fade(0.35)}
-                      className="text-sm mb-6" style={{ color: MUTED }}>
+                      className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>
                       Riceverai un messaggio su WhatsApp a breve.
                     </motion.p>
                     <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={fade(0.45)}
                       className="p-4 rounded-xl mb-8 text-left"
                       style={{ background: AG(0.08), border: `1px solid ${ABORD}` }}>
                       <div className="grid grid-cols-3 gap-3 text-sm">
-                        <div><p className="text-xs mb-0.5" style={{ color: MUTED }}>Trattamento</p>
+                        <div><p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Trattamento</p>
                           <p className="text-white font-semibold leading-tight">{TREATMENTS.find(t => t.id === selectedTreatment)?.name}</p></div>
-                        <div><p className="text-xs mb-0.5" style={{ color: MUTED }}>Data</p>
+                        <div><p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Data</p>
                           <p className="text-white font-semibold">{DAYS[selectedDay]?.label} {DAYS[selectedDay]?.num}</p></div>
-                        <div><p className="text-xs mb-0.5" style={{ color: MUTED }}>Orario</p>
+                        <div><p className="text-xs mb-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Orario</p>
                           <p className="font-bold" style={{ color: A }}>{selectedTime}</p></div>
                       </div>
                     </motion.div>
                     <motion.button
                       initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={fade(0.55)}
                       onClick={handleReset}
-                      className="text-xs font-medium" style={{ color: MUTED }}
+                      className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}
                     >
                       ← Effettua un'altra prenotazione
                     </motion.button>
@@ -804,8 +804,8 @@ const ROWS = [
 ]
 
 const statusMap = {
-  ok:   { label: 'Confermata',  bg: 'rgba(34,197,94,0.1)',  border: 'rgba(34,197,94,0.25)',  text: '#4ade80' },
-  wait: { label: 'In attesa',   bg: 'rgba(234,179,8,0.1)',  border: 'rgba(234,179,8,0.25)',  text: '#fde047' },
+  ok:   { label: 'Confermata', bg: 'rgba(34,197,94,0.08)',  border: 'rgba(34,197,94,0.2)',  text: '#16a34a' },
+  wait: { label: 'In attesa',  bg: 'rgba(234,179,8,0.08)',  border: 'rgba(234,179,8,0.2)',  text: '#b45309' },
 }
 
 function DashboardPreview() {
@@ -820,50 +820,53 @@ function DashboardPreview() {
           <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: A }}>Sistema Live</span>
         </FadeUp>
         <FadeUp delay={0.08} className="mb-12">
-          <h2 className="font-display text-[clamp(2rem,4vw,3.2rem)] leading-tight tracking-tight text-white">
+          <h2 className="font-display text-[clamp(2rem,4vw,3.2rem)] leading-tight tracking-tight" style={{ color: TEXT }}>
             Il tuo sistema<br />in tempo reale
           </h2>
         </FadeUp>
 
         <FadeUp delay={0.12}>
-          <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${BORD}`, boxShadow: '0 40px 100px rgba(0,0,0,0.6)' }}>
+          <div className="rounded-2xl overflow-hidden" style={{
+            border: `1px solid ${BORD}`,
+            boxShadow: `0 20px 60px ${AG(0.06)}, 0 4px 16px rgba(0,0,0,0.04)`,
+          }}>
             {/* Top bar */}
-            <div className="flex items-center justify-between px-6 py-4" style={{ background: 'rgba(255,255,255,0.03)', borderBottom: `1px solid ${BORD}` }}>
+            <div className="flex items-center justify-between px-6 py-4" style={{ background: BG_ALT, borderBottom: `1px solid ${BORD}` }}>
               <div className="flex items-center gap-2">
-                <span className="font-display font-bold text-sm text-white tracking-wider">AURORA</span>
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: A, boxShadow: `0 0 6px ${A}` }} />
+                <span className="font-display font-bold text-sm tracking-wider" style={{ color: TEXT }}>AURORA</span>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: A, boxShadow: `0 0 6px ${AG(0.5)}` }} />
                 <span className="text-xs font-semibold" style={{ color: A }}>CLINIC</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: '0 0 6px #22c55e' }} />
+                <span className="w-2 h-2 rounded-full bg-green-500" style={{ boxShadow: '0 0 6px #22c55e' }} />
                 <span className="text-xs" style={{ color: MUTED }}>Sistema attivo</span>
               </div>
             </div>
 
             {/* KPIs */}
-            <div className="grid grid-cols-3 divide-x" style={{ borderBottom: `1px solid ${BORD}`, borderColor: BORD }}>
+            <div className="grid grid-cols-3 divide-x" style={{ borderBottom: `1px solid ${BORD}` }}>
               {[
                 { label: 'Prenotazioni oggi', valRef: r1, val: v1, suffix: '' },
                 { label: 'Fatturato mese',    valRef: r2, val: v2, prefix: '€', suffix: '' },
                 { label: 'Soddisfazione',     valRef: r3, val: v3, suffix: '%' },
               ].map((kpi, i) => (
-                <div key={kpi.label} className="px-6 py-5" style={{ borderColor: BORD }}>
+                <div key={kpi.label} className="px-6 py-5" style={{ borderColor: BORD, background: CARD }}>
                   <p className="text-xs mb-2" style={{ color: MUTED }}>{kpi.label}</p>
-                  <p className="font-display text-3xl font-extrabold" style={{ color: i === 0 ? A : '#fff' }}>
+                  <p className="font-display text-3xl font-extrabold" style={{ color: i === 0 ? A : TEXT }}>
                     <span ref={kpi.valRef}>
                       {kpi.prefix}{i === 1 ? (kpi.val >= 1000 ? `${(kpi.val / 1000).toFixed(1)}k` : kpi.val) : kpi.val}{kpi.suffix}
                     </span>
                   </p>
-                  <p className="text-xs mt-1 font-semibold" style={{ color: '#4ade80' }}>↑ +12% vs. mese scorso</p>
+                  <p className="text-xs mt-1 font-semibold" style={{ color: '#16a34a' }}>↑ +12% vs. mese scorso</p>
                 </div>
               ))}
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" style={{ background: CARD }}>
               <table className="w-full text-sm">
                 <thead>
-                  <tr style={{ background: 'rgba(255,255,255,0.02)', borderBottom: `1px solid ${BORD}` }}>
+                  <tr style={{ background: BG_ALT, borderBottom: `1px solid ${BORD}` }}>
                     {['Cliente', 'Trattamento', 'Orario', 'Stato'].map((h) => (
                       <th key={h} className="px-6 py-3 text-left font-semibold text-xs uppercase tracking-wider" style={{ color: MUTED }}>{h}</th>
                     ))}
@@ -880,7 +883,7 @@ function DashboardPreview() {
                         viewport={{ once: true }}
                         style={{ borderBottom: `1px solid ${BORD}` }}
                       >
-                        <td className="px-6 py-4 font-medium text-white">{r.name}</td>
+                        <td className="px-6 py-4 font-medium" style={{ color: TEXT }}>{r.name}</td>
                         <td className="px-6 py-4" style={{ color: MUTED }}>{r.service}</td>
                         <td className="px-6 py-4 font-semibold" style={{ color: MUTED }}>{r.time}</td>
                         <td className="px-6 py-4">
@@ -901,17 +904,20 @@ function DashboardPreview() {
     </section>
   )
 }
+    </section>
+  )
+}
 
 // ── TEAM ──────────────────────────────────────────────────────
 function TeamClinic() {
   return (
-    <section className="section-padding" style={{ background: '#06070f', borderTop: `1px solid ${BORD}` }}>
+    <section className="section-padding" style={{ background: BG_ALT, borderTop: `1px solid ${BORD}` }}>
       <div className="container-max">
         <FadeUp className="mb-4">
           <span className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: A }}>Il Nostro Team</span>
         </FadeUp>
         <FadeUp delay={0.08} className="mb-12">
-          <h2 className="font-display text-[clamp(2rem,4vw,3.2rem)] leading-tight tracking-tight text-white">
+          <h2 className="font-display text-[clamp(2rem,4vw,3.2rem)] leading-tight tracking-tight" style={{ color: TEXT }}>
             I medici<br />che ti seguono
           </h2>
         </FadeUp>
@@ -920,27 +926,29 @@ function TeamClinic() {
           {DOCTORS.map((d, i) => (
             <FadeUp key={d.name} delay={i * 0.08}>
               <motion.div
-                whileHover={{ y: -6, boxShadow: `0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px ${ABORD}` }}
+                whileHover={{ y: -6, boxShadow: `0 20px 50px ${AG(0.1)}, 0 0 0 1px ${ABORD}` }}
                 transition={{ duration: 0.25 }}
                 className="relative overflow-hidden rounded-2xl"
-                style={{ background: CARD, border: `1px solid ${BORD}` }}
+                style={{ background: CARD, border: `1px solid ${BORD}`, boxShadow: `0 4px 16px rgba(0,0,0,0.04)` }}
               >
                 {/* Avatar area */}
                 <div className="relative h-52 flex items-center justify-center overflow-hidden"
-                  style={{ background: `linear-gradient(135deg, ${AG(0.1)} 0%, rgba(124,58,237,0.06) 100%)` }}>
+                  style={{ background: `linear-gradient(135deg, ${AG(0.07)} 0%, rgba(232,162,180,0.05) 100%)` }}>
                   {/* Initials circle */}
                   <div className="w-20 h-20 rounded-full flex items-center justify-center font-display font-bold text-xl text-white"
-                    style={{ background: AG(0.15), border: `2px solid ${ABORD}`, boxShadow: `0 0 30px ${AG(0.15)}` }}>
+                    style={{ background: `linear-gradient(135deg, ${A}, #e8628a)`, boxShadow: `0 8px 24px ${AG(0.25)}` }}>
                     {d.initials}
                   </div>
                   {/* Decorative rings */}
                   <div className="absolute w-36 h-36 rounded-full pointer-events-none"
-                    style={{ border: `1px solid ${AG(0.08)}` }} />
+                    style={{ border: `1px solid ${AG(0.12)}` }} />
+                  <div className="absolute w-48 h-48 rounded-full pointer-events-none"
+                    style={{ border: `1px solid ${AG(0.06)}` }} />
                 </div>
 
                 <div className="p-4">
                   <div className="w-8 h-0.5 rounded-full mb-3" style={{ background: A }} />
-                  <h3 className="font-display font-bold text-white text-sm leading-tight mb-1">{d.name}</h3>
+                  <h3 className="font-display font-bold text-sm leading-tight mb-1" style={{ color: TEXT }}>{d.name}</h3>
                   <p className="text-xs font-semibold mb-1" style={{ color: A }}>{d.spec}</p>
                   <p className="text-xs" style={{ color: MUTED }}>{d.exp} di esperienza</p>
                 </div>
@@ -959,9 +967,9 @@ function FinalCTAClinic() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="section-padding relative overflow-hidden" style={{ background: BG }}>
+    <section ref={ref} className="section-padding relative overflow-hidden" style={{ background: BG_DARK }}>
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 70% 70% at 50% 50%, ${AG(0.15)} 0%, transparent 65%)` }} />
+        <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 70% 70% at 50% 50%, ${AG(0.12)} 0%, transparent 65%)` }} />
       </div>
 
       {/* Orbital rings */}
@@ -971,8 +979,8 @@ function FinalCTAClinic() {
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
         aria-hidden
       >
-        <div className="w-[560px] h-[560px] rounded-full animate-spin-slow" style={{ border: `1px solid ${AG(0.06)}` }} />
-        <div className="absolute inset-10 rounded-full animate-spin-reverse" style={{ border: `1px dashed ${AG(0.04)}` }} />
+        <div className="w-[560px] h-[560px] rounded-full animate-spin-slow" style={{ border: `1px solid ${AG(0.08)}` }} />
+        <div className="absolute inset-10 rounded-full animate-spin-reverse" style={{ border: `1px dashed ${AG(0.05)}` }} />
         <div className="absolute inset-20 rounded-full" style={{ border: `1px solid ${AG(0.03)}` }} />
       </motion.div>
 
@@ -981,9 +989,9 @@ function FinalCTAClinic() {
           initial={{ opacity: 0, scale: 0.8 }} animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.5, ease, delay: 0.1 }}
           className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-widest"
-          style={{ background: CARD, border: `1px solid ${BORD}`, color: MUTED }}
+          style={{ background: AG(0.1), border: `1px solid ${ABORD}`, color: A }}
         >
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse-glow" style={{ background: A, boxShadow: `0 0 6px ${A}` }} />
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse-glow" style={{ background: A, boxShadow: `0 0 6px ${AG(0.6)}` }} />
           Consulto gratuito — Risposta in 24h
         </motion.span>
 
@@ -1003,7 +1011,7 @@ function FinalCTAClinic() {
           Non è un sito.
           <br />
           <span style={{
-            background: `linear-gradient(135deg, ${A} 0%, #00d4ff 100%)`,
+            background: `linear-gradient(135deg, ${A} 0%, #e8628a 100%)`,
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           }}>
             È un sistema.
@@ -1013,9 +1021,9 @@ function FinalCTAClinic() {
         <motion.p
           initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
           transition={fade(0.35)}
-          className="text-lg mb-10" style={{ color: MUTED }}
+          className="text-lg mb-10" style={{ color: 'rgba(255,255,255,0.5)' }}
         >
-          Ogni richiesta trasformata in consulenza. Ogni cliente accompagnato.
+          Ogni richiesta trasformata in consulenza. Ogni paziente accompagnata.
         </motion.p>
 
         <motion.div
@@ -1028,8 +1036,8 @@ function FinalCTAClinic() {
             whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
             className="px-8 py-4 rounded-xl font-bold text-white text-base"
             style={{
-              background: `linear-gradient(135deg, ${A}, #0040dd)`,
-              boxShadow: `0 8px 40px ${AG(0.5)}, 0 0 60px ${AG(0.15)}`,
+              background: `linear-gradient(135deg, ${A}, #e8628a)`,
+              boxShadow: `0 8px 40px ${AG(0.4)}, 0 0 60px ${AG(0.12)}`,
             }}
           >
             Prenota ora
@@ -1038,7 +1046,7 @@ function FinalCTAClinic() {
             onClick={() => openWhatsApp('demo')}
             whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
             className="btn-ghost px-8 py-4 text-base"
-            style={{ borderColor: ABORD, color: '#a0b0ff' }}
+            style={{ borderColor: ABORD, color: A }}
           >
             Scopri il sistema →
           </motion.button>
@@ -1057,6 +1065,7 @@ export default function ClinicMilano() {
         accent={A}
         ctaLabel="Prenota"
         onCta={() => openWhatsApp('generic')}
+        light
       />
       <HeroClinic />
       <TreatmentsClinic />

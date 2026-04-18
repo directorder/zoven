@@ -101,13 +101,6 @@
     padding-bottom: 6rem;
   }
 
-  @media (max-width: 768px) {
-    .section-padding {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-    }
-  }
-
   .container-max {
     max-width: 1200px;
     margin-left: auto;
@@ -177,6 +170,26 @@
     border-color: rgba(0,212,255,0.4);
     color: #00d4ff;
     transform: translateY(-1px);
+  }
+}
+
+/* Layout — plain CSS, guaranteed to apply */
+.container-max {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section-padding {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
   }
 }
 

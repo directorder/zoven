@@ -41,7 +41,7 @@ const demos = [
     category: 'Clinica Estetica',
     brand: 'AURORA CLINIC',
     tagline: 'Wizard di prenotazione 3-step, dashboard real-time, simulazione 3D del trattamento.',
-    accent: '#5b8cff',
+    accent: '#c4607a',
     bg: 'rgba(91,140,255,0.07)',
     border: 'rgba(91,140,255,0.18)',
   },
