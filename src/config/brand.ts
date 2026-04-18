@@ -20,8 +20,8 @@ export const brand = {
   whatsappMode: (import.meta.env.VITE_WHATSAPP_MODE ?? 'free') as 'free' | 'cloud_api',
   email: 'info@zoven.it',
   socialLinks: {
-    instagram: 'https://instagram.com/zoven' as string,
-    linkedin: 'https://linkedin.com/company/zoven' as string,
+    instagram: 'https://www.instagram.com/zovensoluzioni/' as string,
+    tiktok: 'https://www.tiktok.com/@zovensoluzioni' as string,
   },
 }
 

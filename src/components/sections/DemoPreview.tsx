@@ -42,8 +42,8 @@ const demos = [
     brand: 'AURORA CLINIC',
     tagline: 'Wizard di prenotazione 3-step, dashboard real-time, simulazione 3D del trattamento.',
     accent: '#c4607a',
-    bg: 'rgba(91,140,255,0.07)',
-    border: 'rgba(91,140,255,0.18)',
+    bg: 'rgba(196,96,122,0.1)',
+    border: 'rgba(196,96,122,0.2)',
   },
 ]
 
@@ -52,10 +52,10 @@ const container = {
   visible: { transition: { staggerChildren: 0.12 } },
 }
 const item = {
-  hidden: { opacity: 0, y: 28, scale: 0.95, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 36, z: -80, scale: 0.9, rotateX: 11, rotateY: -5, filter: 'blur(8px)' },
   visible: {
-    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+    opacity: 1, y: 0, z: 0, scale: 1, rotateX: 0, rotateY: 0, filter: 'blur(0px)',
+    transition: { duration: 0.82, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
   },
 }
 
@@ -133,14 +133,17 @@ export default function DemoPreview() {
           className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-14"
         >
           {demos.map((demo) => (
-            <motion.div key={demo.path} variants={item} className="h-full">
+            <motion.div key={demo.path} variants={item} className="h-full" style={{ transformPerspective: 1200, transformStyle: 'preserve-3d' }}>
               <Link to={demo.path} target="_blank" rel="noopener noreferrer" className="block group h-full">
-                <div
+                <motion.div
                   className="relative rounded-2xl overflow-hidden h-full transition-all duration-300 group-hover:-translate-y-1"
                   style={{
                     background: 'rgba(255,255,255,0.025)',
                     border: `1px solid ${demo.border}`,
+                    transformStyle: 'preserve-3d',
                   }}
+                  whileHover={{ y: -8, scale: 1.01, rotateX: -4, rotateY: 3, z: 12 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
                 >
                   {/* Hover glow */}
                   <div
@@ -203,7 +206,7 @@ export default function DemoPreview() {
                     className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{ background: `linear-gradient(90deg, transparent, ${demo.accent}40, transparent)` }}
                   />
-                </div>
+                </motion.div>
               </Link>
             </motion.div>
           ))}

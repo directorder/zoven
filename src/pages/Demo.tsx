@@ -55,11 +55,11 @@ const demos = [
     location: 'Milano',
     tagline: 'Sistema di prenotazione intelligente per cliniche estetiche: booking online, dashboard e simulazione 3D.',
     accent: '#c4607a',
-    accentSoft: 'rgba(31,79,255,0.09)',
-    accentBorder: 'rgba(31,79,255,0.22)',
-    accentGlow: 'rgba(31,79,255,0.14)',
+    accentSoft: 'rgba(196,96,122,0.1)',
+    accentBorder: 'rgba(196,96,122,0.22)',
+    accentGlow: 'rgba(196,96,122,0.14)',
     features: ['Booking 3-step', 'Dashboard live', 'Simulazione 3D', 'Team medici'],
-    bg: 'radial-gradient(ellipse at 50% 40%, rgba(31,79,255,0.08) 0%, transparent 70%)',
+    bg: 'radial-gradient(ellipse at 50% 40%, rgba(196,96,122,0.12) 0%, transparent 70%)',
   },
 ]
 
@@ -70,13 +70,14 @@ function DemoCard({ demo, index }: { demo: typeof demos[0]; index: number }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40, scale: 0.97 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      initial={{ opacity: 0, y: 52, z: -90, scale: 0.9, rotateX: 12, rotateY: -6, filter: 'blur(10px)' }}
+      animate={inView ? { opacity: 1, y: 0, z: 0, scale: 1, rotateX: 0, rotateY: 0, filter: 'blur(0px)' } : {}}
       transition={{
-        duration: 0.75,
+        duration: 0.85,
         delay: index * 0.14,
         ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       }}
+      style={{ transformPerspective: 1200, transformStyle: 'preserve-3d' }}
     >
       <Link to={demo.path} className="block group">
         <motion.div
@@ -84,8 +85,9 @@ function DemoCard({ demo, index }: { demo: typeof demos[0]; index: number }) {
           style={{
             background: 'rgba(255,255,255,0.02)',
             border: `1px solid ${demo.accentBorder}`,
+            transformStyle: 'preserve-3d',
           }}
-          whileHover={{ y: -6, scale: 1.006 }}
+          whileHover={{ y: -8, scale: 1.01, rotateX: -4, rotateY: 3, z: 12 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
         >
           {/* Background glow on hover */}

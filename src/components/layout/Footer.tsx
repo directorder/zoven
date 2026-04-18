@@ -35,15 +35,15 @@ export default function Footer() {
                   <InstagramIcon />
                 </a>
               )}
-              {brand.socialLinks.linkedin !== '#' && (
+              {brand.socialLinks.tiktok !== '#' && (
                 <a
-                  href={brand.socialLinks.linkedin}
+                  href={brand.socialLinks.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#8892a4] hover:text-white transition-colors"
-                  aria-label="LinkedIn"
+                  aria-label="TikTok"
                 >
-                  <LinkedInIcon />
+                  <TikTokIcon />
                 </a>
               )}
             </div>
@@ -120,11 +120,10 @@ function InstagramIcon() {
   )
 }
 
-function LinkedInIcon() {
+function TikTokIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" />
-      <circle cx="4" cy="4" r="2" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.24v13.18a2.87 2.87 0 1 1-1.98-2.72v-3.3a6.18 6.18 0 1 0 5.22 6.1v-6.7a8.15 8.15 0 0 0 4.77 1.54V6.86c-.34 0-.67-.06-1-.17z" />
     </svg>
   )
 }

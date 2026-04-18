@@ -520,7 +520,7 @@ function BookingWidget() {
           <motion.div
             initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={fade(0.2)}
-            className="flex-1 w-full min-h-[420px] rounded-2xl overflow-hidden relative"
+            className="flex-1 w-full rounded-2xl overflow-hidden relative"
             style={{
               background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(196,96,122,0.18)`,
               boxShadow: `0 32px 80px rgba(0,0,0,0.5), 0 0 40px ${AG(0.05)}`,
@@ -546,7 +546,7 @@ function BookingWidget() {
                     transition={{ duration: 0.35, ease }}>
                     <h3 className="font-display text-xl font-bold text-white mb-2">Quale trattamento?</h3>
                     <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.45)' }}>Seleziona il trattamento che desideri prenotare.</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                       {TREATMENTS.map((t) => {
                         const sel = selectedTreatment === t.id
                         return (
@@ -554,7 +554,7 @@ function BookingWidget() {
                             key={t.id}
                             onClick={() => setSelectedTreatment(t.id)}
                             whileHover={{ scale: 1.015 }} whileTap={{ scale: 0.985 }}
-                            className="flex items-center gap-3 p-3.5 rounded-xl text-left transition-all"
+                            className="flex items-center gap-3 p-4 rounded-xl text-left transition-all"
                             style={{
                               background: sel ? AG(0.15) : 'rgba(255,255,255,0.03)',
                               border: `1px solid ${sel ? ABORD : 'rgba(255,255,255,0.07)'}`,
@@ -581,7 +581,7 @@ function BookingWidget() {
                       onClick={() => selectedTreatment && setStep(2)}
                       whileHover={{ scale: selectedTreatment ? 1.02 : 1 }}
                       whileTap={{ scale: 0.97 }}
-                      className="w-full py-3.5 rounded-xl font-semibold text-white transition-all"
+                      className="w-full py-4 rounded-xl font-semibold text-white transition-all"
                       style={{
                         background: selectedTreatment ? `linear-gradient(135deg, ${A}, #e8628a)` : 'rgba(255,255,255,0.06)',
                         color: selectedTreatment ? '#fff' : 'rgba(255,255,255,0.3)',
@@ -610,14 +610,14 @@ function BookingWidget() {
                     </div>
 
                     {/* Days */}
-                    <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+                    <div className="flex gap-2.5 mb-6 overflow-x-auto pb-1">
                       {DAYS.map((d, i) => {
                         const sel = selectedDay === i
                         return (
                           <motion.button
                             key={i} onClick={() => setSelectedDay(i)}
                             whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                            className="flex-shrink-0 flex flex-col items-center gap-1 px-4 py-3 rounded-xl font-medium text-sm"
+                            className="flex-shrink-0 flex flex-col items-center gap-1.5 px-4 py-3.5 rounded-xl font-medium text-sm"
                             style={{
                               background: sel ? AG(0.18) : 'rgba(255,255,255,0.04)',
                               border: `1px solid ${sel ? ABORD : 'rgba(255,255,255,0.07)'}`,
@@ -633,14 +633,14 @@ function BookingWidget() {
                     </div>
 
                     {/* Times */}
-                    <div className="grid grid-cols-3 gap-2 mb-8">
+                    <div className="grid grid-cols-3 gap-2.5 mb-8">
                       {TIMES.map((t) => {
                         const sel = selectedTime === t
                         return (
                           <motion.button
                             key={t} onClick={() => setSelectedTime(t)}
                             whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                            className="py-3 rounded-xl font-semibold text-sm"
+                            className="py-3.5 rounded-xl font-semibold text-sm"
                             style={{
                               background: sel ? AG(0.18) : 'rgba(255,255,255,0.04)',
                               border: `1px solid ${sel ? ABORD : 'rgba(255,255,255,0.07)'}`,
@@ -658,7 +658,7 @@ function BookingWidget() {
                       onClick={() => selectedTime && setStep(3)}
                       whileHover={{ scale: selectedTime ? 1.02 : 1 }}
                       whileTap={{ scale: 0.97 }}
-                      className="w-full py-3.5 rounded-xl font-semibold text-white"
+                      className="w-full py-4 rounded-xl font-semibold text-white"
                       style={{
                         background: selectedTime ? `linear-gradient(135deg, ${A}, #e8628a)` : 'rgba(255,255,255,0.06)',
                         color: selectedTime ? '#fff' : 'rgba(255,255,255,0.3)',
@@ -704,7 +704,7 @@ function BookingWidget() {
                             value={field.value}
                             onChange={(e) => field.setter(e.target.value)}
                             placeholder={field.placeholder}
-                            className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-[rgba(255,255,255,0.2)] outline-none transition-all"
+                            className="w-full px-4 py-3.5 rounded-xl text-sm text-white placeholder-[rgba(255,255,255,0.2)] outline-none transition-all"
                             style={{
                               background: 'rgba(255,255,255,0.04)',
                               border: `1px solid rgba(255,255,255,0.07)`,
@@ -720,7 +720,7 @@ function BookingWidget() {
                       onClick={() => name.trim() && phone.trim() && handleConfirm()}
                       disabled={submitting || !name.trim() || !phone.trim()}
                       whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                      className="w-full py-3.5 rounded-xl font-semibold text-white relative overflow-hidden"
+                      className="w-full py-4 rounded-xl font-semibold text-white relative overflow-hidden"
                       style={{
                         background: `linear-gradient(135deg, ${A}, #e8628a)`,
                         boxShadow: `0 4px 24px ${AG(0.45)}`,

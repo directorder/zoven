@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { openWhatsApp } from '../../lib/whatsapp'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40)
@@ -19,6 +21,28 @@ export default function Navbar() {
     { label: 'Showcase', href: '#showcase' },
     { label: 'Perché ZOVEN', href: '#perche-zoven' },
   ]
+
+  const scrollToSection = (href: string) => {
+    const id = href.replace('#', '')
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  const handleSectionNav = (href: string) => {
+    setMenuOpen(false)
+    if (location.pathname === '/') {
+      scrollToSection(href)
+      return
+    }
+
+    navigate('/')
+    const attempts = [120, 260, 420]
+    attempts.forEach((delay) => {
+      window.setTimeout(() => scrollToSection(href), delay)
+    })
+  }
 
   return (
     <motion.nav
@@ -47,13 +71,13 @@ export default function Navbar() {
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
             {links.map((l) => (
-              <a
+              <button
                 key={l.href}
-                href={l.href}
+                onClick={() => handleSectionNav(l.href)}
                 className="text-sm text-[#8892a4] hover:text-white transition-colors duration-200 font-medium"
               >
                 {l.label}
-              </a>
+              </button>
             ))}
             <Link
               to="/demo"
@@ -104,14 +128,13 @@ export default function Navbar() {
           >
             <div className="container-max py-4 flex flex-col gap-4">
               {links.map((l) => (
-                <a
+                <button
                   key={l.href}
-                  href={l.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-[#8892a4] hover:text-white text-sm font-medium py-1 transition-colors"
+                  onClick={() => handleSectionNav(l.href)}
+                  className="text-[#8892a4] hover:text-white text-sm font-medium py-1 transition-colors text-left"
                 >
                   {l.label}
-                </a>
+                </button>
               ))}
               <Link
                 to="/demo"
