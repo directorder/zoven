@@ -904,9 +904,6 @@ function DashboardPreview() {
     </section>
   )
 }
-    </section>
-  )
-}
 
 // ── TEAM ──────────────────────────────────────────────────────
 function TeamClinic() {
