@@ -5,6 +5,7 @@ import ProblemSection from '../components/sections/ProblemSection'
 import SolutionSection from '../components/sections/SolutionSection'
 import ResultsSection from '../components/sections/ResultsSection'
 import HowItWorks from '../components/sections/HowItWorks'
+import DemoPreview from '../components/sections/DemoPreview'
 import LiveDemo from '../components/sections/LiveDemo'
 import Showcase from '../components/sections/Showcase'
 import WhyZoven from '../components/sections/WhyZoven'
@@ -23,6 +24,7 @@ export default function Home() {
         <SolutionSection />
         <ResultsSection />
         <HowItWorks />
+        <DemoPreview />
         <LiveDemo />
         <Showcase />
         <WhyZoven />

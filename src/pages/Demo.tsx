@@ -47,6 +47,20 @@ const demos = [
     features: ['Day Charter', 'Sunset Cruise', 'Island Hopping', 'Booking integrato'],
     bg: 'radial-gradient(ellipse at 50% 50%, rgba(0,212,240,0.06) 0%, transparent 70%)',
   },
+  {
+    path: '/demo/clinic',
+    label: '04',
+    category: 'Medicina Estetica',
+    brand: 'AURORA CLINIC',
+    location: 'Milano',
+    tagline: 'Sistema di prenotazione intelligente per cliniche estetiche: booking online, dashboard e simulazione 3D.',
+    accent: '#1f4fff',
+    accentSoft: 'rgba(31,79,255,0.09)',
+    accentBorder: 'rgba(31,79,255,0.22)',
+    accentGlow: 'rgba(31,79,255,0.14)',
+    features: ['Booking 3-step', 'Dashboard live', 'Simulazione 3D', 'Team medici'],
+    bg: 'radial-gradient(ellipse at 50% 40%, rgba(31,79,255,0.08) 0%, transparent 70%)',
+  },
 ]
 
 function DemoCard({ demo, index }: { demo: typeof demos[0]; index: number }) {

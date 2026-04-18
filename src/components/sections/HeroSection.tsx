@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { Link } from 'react-router-dom'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Environment } from '@react-three/drei'
 import { motion } from 'framer-motion'
@@ -95,13 +96,13 @@ export default function HeroSection() {
                 <WaIcon />
                 Apri WhatsApp
               </MagneticButton>
-              <MagneticButton
-                onClick={() => openWhatsApp('demo')}
-                className="btn-ghost w-full sm:w-auto text-base px-7 py-3.5"
-                strength={0.2}
+              <Link
+                to="/demo"
+                className="btn-ghost w-full sm:w-auto text-base px-7 py-3.5 inline-flex items-center justify-center gap-2 font-medium"
               >
-                Richiedi demo
-              </MagneticButton>
+                Vedi le demo live
+                <span className="text-[#00d4ff]">→</span>
+              </Link>
             </motion.div>
 
             {/* Social proof strip */}
