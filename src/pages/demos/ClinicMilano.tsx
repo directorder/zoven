@@ -79,7 +79,7 @@ function useCounter(target: number, once = true) {
 function FadeUp({
   children, delay = 0, className = '', as: Tag = 'div',
 }: {
-  children: React.ReactNode; delay?: number; className?: string; as?: keyof JSX.IntrinsicElements
+  children: React.ReactNode; delay?: number; className?: string; as?: keyof React.JSX.IntrinsicElements
 }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-48px' })
