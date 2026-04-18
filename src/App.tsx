@@ -5,6 +5,7 @@ import Demo from './pages/Demo'
 import BeautyMilano from './pages/demos/BeautyMilano'
 import BarberMilano from './pages/demos/BarberMilano'
 import BookingExperience from './pages/demos/BookingExperience'
+import ClinicMilano from './pages/demos/ClinicMilano'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/demo/beauty-milano" element={<BeautyMilano />} />
         <Route path="/demo/barber-milano" element={<BarberMilano />} />
         <Route path="/demo/booking-experience" element={<BookingExperience />} />
+        <Route path="/demo/clinic" element={<ClinicMilano />} />
       </Routes>
     </BrowserRouter>
   )
