@@ -34,7 +34,7 @@ export default function HeroSection() {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] pointer-events-none bg-[radial-gradient(ellipse_at_top_right,rgba(124,58,237,0.12)_0%,transparent_70%)]" />
 
       <div className="container-max w-full relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-0 pt-24 pb-16">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-0 pt-32 md:pt-36 pb-16">
           {/* Text */}
           <div className="flex-1 text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
             {/* Badge */}

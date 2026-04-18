@@ -137,14 +137,14 @@ export default function HowItWorks() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Steps */}
-          <div className="space-y-0">
+          <div className="space-y-3">
             {steps.map((s, i) => (
               <motion.div
                 key={s.n}
                 initial={{ opacity: 0, x: -40 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.65, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
-                className="flex items-start gap-5 group"
+                className="flex items-start gap-5 group rounded-2xl px-4 py-4 border border-white/7 bg-white/[0.02] hover:bg-white/[0.03] transition-colors"
               >
                 {/* Number + animated connector */}
                 <div className="flex flex-col items-center flex-shrink-0">
@@ -169,7 +169,7 @@ export default function HowItWorks() {
                   )}
                 </div>
                 {/* Text */}
-                <div className="pb-5">
+                <div className="pr-1">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="text-[10px] text-[#00d4ff] font-bold tracking-widest">{s.n}</span>
                     <h3 className="text-white font-semibold text-base">{s.title}</h3>

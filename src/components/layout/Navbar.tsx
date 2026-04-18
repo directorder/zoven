@@ -52,20 +52,20 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? 'bg-[#06080f]/90 backdrop-blur-xl border-b border-white/5 shadow-[0_2px_40px_rgba(0,0,0,0.4)]'
-          : 'bg-transparent'
+          : 'bg-[#06080f]/58 backdrop-blur-lg border-b border-white/8'
       }`}
     >
       <div className="container-max">
-        <div className="flex items-center justify-between h-16 md:h-18">
+        <div className="flex items-center justify-between h-[74px] md:h-[80px]">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2.5 group" aria-label="ZOVEN home">
-            <div className="relative w-7 h-7">
+          <a href="/" className="flex items-center gap-3 group" aria-label="ZOVEN home">
+            <div className="relative w-8 h-8">
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#00d4ff] to-[#7c3aed] opacity-80 blur-sm group-hover:opacity-100 transition-opacity" />
-              <div className="relative w-7 h-7 rounded-full border border-[#00d4ff]/40 flex items-center justify-center bg-[#06080f]">
-                <span className="text-[10px] font-display text-gradient leading-none">Z</span>
+              <div className="relative w-8 h-8 rounded-full border border-[#00d4ff]/40 flex items-center justify-center bg-[#06080f]">
+                <span className="text-[11px] font-display text-gradient leading-none">Z</span>
               </div>
             </div>
-            <span className="font-display text-xl text-white tracking-wider">ZOVEN</span>
+            <span className="font-display text-[1.35rem] text-white tracking-wide">ZOVEN</span>
           </a>
 
           {/* Desktop links */}
@@ -73,8 +73,9 @@ export default function Navbar() {
             {links.map((l) => (
               <button
                 key={l.href}
+                type="button"
                 onClick={() => handleSectionNav(l.href)}
-                className="text-sm text-[#8892a4] hover:text-white transition-colors duration-200 font-medium"
+                className="bg-transparent text-sm text-[#9aa6bb] hover:text-white transition-colors duration-200 font-medium"
               >
                 {l.label}
               </button>
@@ -130,8 +131,9 @@ export default function Navbar() {
               {links.map((l) => (
                 <button
                   key={l.href}
+                  type="button"
                   onClick={() => handleSectionNav(l.href)}
-                  className="text-[#8892a4] hover:text-white text-sm font-medium py-1 transition-colors text-left"
+                  className="bg-transparent text-[#8892a4] hover:text-white text-sm font-medium py-1 transition-colors text-left"
                 >
                   {l.label}
                 </button>
