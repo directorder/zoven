@@ -1,10 +1,27 @@
 import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/ui/SEO'
 import { ArrowRight, CheckCircle, XCircle, Calendar, Users, Bell, MessageSquare, TrendingUp, Phone } from 'lucide-react'
 
 export default function ClinicPage() {
   return (
     <main style={{ background: '#050505', overflowX: 'hidden', paddingTop: 80 }}>
+      <SEO
+        title="ZOVEN CLINIC – Software Gestione Appuntamenti per Cliniche e Studi Medici"
+        description="ZOVEN CLINIC automatizza prenotazioni, reminder WhatsApp, recupero chiamate perse e riattivazione pazienti per cliniche dentali, studi medici e centri estetici. Booking online 24/7, CRM pazienti, centralino AI. Aumenta il fatturato del 43%."
+        keywords="software gestione clinica, appuntamenti online clinica, CRM pazienti, reminder appuntamenti WhatsApp, recupero chiamate perse clinica, software studio dentistico, gestione pazienti studio medico, prenotazioni online studio medico, centralino AI clinica, riattivazione pazienti inattivi, software centro estetico, booking online 24h clinica, ZOVEN CLINIC, gestionale clinico Italia"
+        canonical="/clinic"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "ZOVEN CLINIC",
+          "applicationCategory": "MedicalApplication",
+          "operatingSystem": "Web",
+          "description": "Sistema di gestione completo per cliniche: prenotazioni online 24/7, reminder automatici WhatsApp, CRM pazienti, recupero chiamate perse e riattivazione pazienti.",
+          "offers": { "@type": "Offer", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" },
+          "provider": { "@type": "Organization", "name": "ZOVEN", "url": "https://zoven.it" }
+        }}
+      />
       {/* HERO */}
       <section style={{ position: 'relative', padding: '100px 0 80px', overflow: 'hidden' }}>
         <div style={{

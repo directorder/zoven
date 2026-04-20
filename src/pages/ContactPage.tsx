@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { Send, CheckCircle, Phone, Mail, MapPin } from 'lucide-react'
+import SEO from '../components/ui/SEO'
+import { Send, CheckCircle, Phone, MapPin } from 'lucide-react'
 
 export default function ContactPage() {
   const [form, setForm] = useState({ nome: '', email: '', telefono: '', settore: '', messaggio: '' })
@@ -19,6 +20,12 @@ export default function ContactPage() {
 
   return (
     <main style={{ background: '#050505', minHeight: '100vh', paddingTop: 80 }}>
+      <SEO
+        title="Contatti – Richiedi il tuo Audit Digitale Gratuito | ZOVEN"
+        description="Contatta ZOVEN per ricevere un audit digitale gratuito della tua attività. Analizziamo la tua situazione e proponiamo un sistema su misura per agriturismo, ristorante o clinica. Nessun impegno, risposta entro 24 ore."
+        keywords="contatta ZOVEN, audit digitale gratuito, consulenza digitale gratuita imprese, richiedi demo ZOVEN, consulenza software agriturismo, consulenza software ristorante, consulenza gestionale clinica, sistema digitale su misura, preventivo software gestionale Italia"
+        canonical="/contact"
+      />
       <section style={{ position: 'relative', padding: '80px 0', overflow: 'hidden' }}>
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
@@ -101,8 +108,7 @@ export default function ContactPage() {
               <div style={{ marginTop: 32, padding: '24px', borderRadius: 16, background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <h4 style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 16 }}>Contatti diretti</h4>
                 {[
-                  { icon: Mail, text: 'info@zoven.it' },
-                  { icon: Phone, text: '+39 02 1234 5678' },
+                  { icon: Phone, text: '+39 350 538 3769' },
                   { icon: MapPin, text: 'Italia' },
                 ].map(c => (
                   <div key={c.text} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Phone } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -74,6 +75,14 @@ export default function Footer() {
               display: 'block', fontSize: 14, color: 'rgba(255,255,255,0.6)',
               marginBottom: 10, textDecoration: 'none',
             }}>Contatti</Link>
+            <a href="tel:+393505383769" style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              fontSize: 14, color: 'rgba(255,255,255,0.6)',
+              marginBottom: 16, textDecoration: 'none',
+            }}>
+              <Phone size={13} color="rgba(255,255,255,0.4)" />
+              +39 350 538 3769
+            </a>
             <Link to="/contact" style={{
               display: 'inline-flex', marginTop: 8,
               background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',

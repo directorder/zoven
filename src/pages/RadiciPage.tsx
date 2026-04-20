@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/ui/SEO'
 import { ArrowRight, CheckCircle, XCircle, Calendar, Users, ShoppingBag, Gift, LayoutDashboard } from 'lucide-react'
 
 const fadeUp = {
@@ -11,6 +12,22 @@ const fadeUp = {
 export default function RadiciPage() {
   return (
     <main style={{ background: '#050505', overflowX: 'hidden', paddingTop: 80 }}>
+      <SEO
+        title="ZOVEN RADICI – Software Gestionale per Agriturismi e Aziende Agricole"
+        description="ZOVEN RADICI è il sistema operativo per agriturismi, aziende vitivinicole e aziende agricole. Gestisci prenotazioni camere, tavoli, bottega online, CRM clienti e campagne fidelizzazione in un unico sistema. Prova la demo gratuita."
+        keywords="software agriturismo, gestionale agriturismo, CRM agriturismo, prenotazioni agriturismo online, software azienda agricola, gestione camere agriturismo, bottega online agriturismo, software cantina vitivinicola, sistema prenotazioni tavoli agriturismo, fidelizzazione clienti agriturismo, ZOVEN RADICI, agriturismo digitale Italia"
+        canonical="/radici"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "ZOVEN RADICI",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "Sistema gestionale completo per agriturismi e aziende agricole italiane. CRM, prenotazioni, bottega online, campagne fidelizzazione.",
+          "offers": { "@type": "Offer", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" },
+          "provider": { "@type": "Organization", "name": "ZOVEN", "url": "https://zoven.it" }
+        }}
+      />
       {/* HERO */}
       <section style={{ position: 'relative', padding: '100px 0 80px', overflow: 'hidden' }}>
         <div style={{

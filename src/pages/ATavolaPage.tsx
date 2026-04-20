@@ -1,10 +1,27 @@
 import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/ui/SEO'
 import { ArrowRight, CheckCircle, XCircle, ShoppingCart, MessageSquare, MapPin, Users, TrendingUp, Tag } from 'lucide-react'
 
 export default function ATavolaPage() {
   return (
     <main style={{ background: '#050505', overflowX: 'hidden', paddingTop: 80 }}>
+      <SEO
+        title="ZOVEN A TAVOLA – Ordini Online Diretti per Pizzerie e Ristoranti senza Commissioni"
+        description="ZOVEN A TAVOLA elimina Deliveroo, JustEat e Glovo. Crea il tuo canale di ordini online diretto via WhatsApp e sito proprietario. Zero commissioni, CRM clienti, fidelizzazione e SEO locale. Risparmia fino a €20.000/anno."
+        keywords="ordini online ristorante, sistema ordini pizzeria, alternativa deliveroo, eliminare just eat, eliminare glovo ristorante, zero commissioni food delivery, ordini WhatsApp ristorante, sito ordini online pizzeria, menu digitale ristorante, fidelizzazione clienti pizzeria, SEO locale ristorante, CRM ristorante, ZOVEN A TAVOLA, software ristorazione Italia"
+        canonical="/a-tavola"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "ZOVEN A TAVOLA",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "Sistema di ordini online diretto per pizzerie e ristoranti. Elimina le commissioni delle piattaforme food delivery con ordini via WhatsApp e canale proprietario.",
+          "offers": { "@type": "Offer", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" },
+          "provider": { "@type": "Organization", "name": "ZOVEN", "url": "https://zoven.it" }
+        }}
+      />
       {/* HERO */}
       <section style={{ position: 'relative', padding: '100px 0 80px', overflow: 'hidden' }}>
         <div style={{

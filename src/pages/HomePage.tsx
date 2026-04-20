@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/ui/SEO'
 import { ArrowRight, CheckCircle, TrendingUp, Shield, Zap, Users, Star } from 'lucide-react'
 import { useInView, useCounter } from '../hooks/useInView'
 import Button from '../components/ui/Button'
@@ -40,6 +41,43 @@ export default function HomePage() {
 
   return (
     <main style={{ background: '#050505', overflowX: 'hidden' }}>
+      <SEO
+        title="ZOVEN – Sistemi Digitali che Fanno Crescere le Imprese Italiane"
+        description="ZOVEN costruisce sistemi digitali su misura per agriturismi, ristoranti, pizzerie e cliniche. Eliminiamo caos, abbonamenti inutili e clienti persi. CRM, prenotazioni, ordini online, automazioni WhatsApp."
+        keywords="ZOVEN, sistemi digitali imprese, software gestionale personalizzato, CRM agriturismo, software ristorante ordini online, gestione clinica appuntamenti, automazione processi aziendali, eliminare deliveroo ristorante, software prenotazioni online Italia, digital system PMI italiane"
+        canonical="/"
+        schema={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://zoven.it/#organization",
+              "name": "ZOVEN",
+              "url": "https://zoven.it",
+              "description": "Sistemi digitali su misura per agriturismi, ristoranti e cliniche italiane.",
+              "areaServed": "IT",
+              "contactPoint": { "@type": "ContactPoint", "telephone": "+39-350-538-3769", "contactType": "customer service", "availableLanguage": "Italian" },
+              "sameAs": ["https://zoven.it"]
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://zoven.it/#website",
+              "url": "https://zoven.it",
+              "name": "ZOVEN",
+              "publisher": { "@id": "https://zoven.it/#organization" }
+            },
+            {
+              "@type": "ItemList",
+              "name": "Sistemi ZOVEN",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "ZOVEN RADICI", "url": "https://zoven.it/radici" },
+                { "@type": "ListItem", "position": 2, "name": "ZOVEN A TAVOLA", "url": "https://zoven.it/a-tavola" },
+                { "@type": "ListItem", "position": 3, "name": "ZOVEN CLINIC", "url": "https://zoven.it/clinic" }
+              ]
+            }
+          ]
+        }}
+      />
       {/* HERO */}
       <section
         ref={heroRef}
