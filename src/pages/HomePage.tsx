@@ -36,6 +36,7 @@ const steps = ['Intro', 'Problema', 'Soluzione', 'Prezzi', 'Azione']
 export function HomePage() {
   const immersiveRef = useRef<HTMLElement>(null)
   const settleTimer = useRef<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const [isSettling, setIsSettling] = useState(false)
   const { scrollYProgress } = useScroll({
     target: immersiveRef,
@@ -68,6 +69,22 @@ export function HomePage() {
   const ctaY = useSpring(useTransform(scrollYProgress, [0.84, 1], [40, -10]), { stiffness: 44, damping: 28 })
 
   useEffect(() => {
+    const mq = window.matchMedia('(max-width: 720px)')
+    const onChange = () => setIsMobile(mq.matches)
+    onChange()
+
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', onChange)
+      return () => mq.removeEventListener('change', onChange)
+    }
+
+    mq.addListener(onChange)
+    return () => mq.removeListener(onChange)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return
+
     const hashTargets: Record<string, number> = {
       // Snap to the center of each scene plateau to avoid overlap between chapters.
       '#problema': 0.34,
@@ -106,56 +123,69 @@ export function HomePage() {
         window.clearTimeout(settleTimer.current)
       }
     }
-  }, [])
+  }, [isMobile])
 
   return (
     <MarketingLayout>
       <section ref={immersiveRef} className="immersive-index">
-        <motion.div className={`immersive-index-sticky ${isSettling ? 'is-settling' : ''}`} style={{ opacity: stageOpacity }}>
+        <motion.div className={`immersive-index-sticky ${isSettling ? 'is-settling' : ''}`} style={{ opacity: isMobile ? 1 : stageOpacity }}>
           <motion.div className="immersive-index-bg" style={{ scale: bgScale, rotate: bgRotate }} />
           <motion.div className="immersive-noise" animate={{ opacity: [0.25, 0.35, 0.25] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }} />
-          <motion.div
-            className="immersive-nature-float"
-            aria-hidden="true"
-            style={{ y: natureFloatY, x: natureFloatX, rotate: natureRotate, scale: natureDepth }}
-          >
-            <div className="nature-3d-core">
-              <span className="nature-ring ring-a" />
-              <span className="nature-ring ring-b" />
-              <span className="nature-ring ring-c" />
-              <span className="nature-leaf leaf-a" />
-              <span className="nature-leaf leaf-b" />
-              <span className="nature-leaf leaf-c" />
-              <span className="nature-leaf leaf-d" />
-              <span className="nature-seed" />
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="immersive-logo-core"
-            style={{ opacity: logoOpacity, scale: logoScale }}
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-          >
-            <ZovenOrbitalMark />
+          {!isMobile && (
             <motion.div
-              className="immersive-logo-glow"
-              animate={{ opacity: [0.22, 0.45, 0.22], scale: [0.88, 1.15, 0.88] }}
-              transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}
-            />
-          </motion.div>
-
-          <div className="immersive-stepper" aria-hidden="true">
-            {steps.map((s, i) => (
-              <div key={s} className="immersive-step-item">
-                <span>{String(i + 1).padStart(2, '0')}</span>
-                <p>{s}</p>
+              className="immersive-nature-float"
+              aria-hidden="true"
+              style={{ y: natureFloatY, x: natureFloatX, rotate: natureRotate, scale: natureDepth }}
+            >
+              <div className="nature-3d-core">
+                <span className="nature-ring ring-a" />
+                <span className="nature-ring ring-b" />
+                <span className="nature-ring ring-c" />
+                <span className="nature-leaf leaf-a" />
+                <span className="nature-leaf leaf-b" />
+                <span className="nature-leaf leaf-c" />
+                <span className="nature-leaf leaf-d" />
+                <span className="nature-seed" />
               </div>
-            ))}
-          </div>
+            </motion.div>
+          )}
 
-          <motion.article className="immersive-scene" style={{ opacity: introOpacity, y: introY }}>
+          {!isMobile && (
+            <>
+              <motion.div
+                className="immersive-logo-core"
+                style={{ opacity: logoOpacity, scale: logoScale }}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, ease: 'easeOut' }}
+              >
+                <ZovenOrbitalMark />
+                <motion.div
+                  className="immersive-logo-glow"
+                  animate={{ opacity: [0.22, 0.45, 0.22], scale: [0.88, 1.15, 0.88] }}
+                  transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}
+                />
+              </motion.div>
+
+              <div className="immersive-stepper" aria-hidden="true">
+                {steps.map((s, i) => (
+                  <div key={s} className="immersive-step-item">
+                    <span>{String(i + 1).padStart(2, '0')}</span>
+                    <p>{s}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {isMobile && (
+            <div className="immersive-mobile-scroll-cue" aria-hidden="true">
+              <span>Scorri</span>
+              <i />
+            </div>
+          )}
+
+          <motion.article className="immersive-scene" style={{ opacity: isMobile ? 1 : introOpacity, y: isMobile ? 0 : introY }}>
             <Badge>ZOVEN RADICI</Badge>
             <h1>Il sistema operativo per agriturismi e aziende agricole italiane.</h1>
             <p>
@@ -179,7 +209,7 @@ export function HomePage() {
             </div>
           </motion.article>
 
-          <motion.article className="immersive-scene" style={{ opacity: problemOpacity, y: problemY }}>
+          <motion.article className="immersive-scene" style={{ opacity: isMobile ? 1 : problemOpacity, y: isMobile ? 0 : problemY }}>
             <span className="kicker">Il problema</span>
             <h2>Il caos operativo blocca crescita e margine.</h2>
             <div className="immersive-grid two">
@@ -200,7 +230,7 @@ export function HomePage() {
             </div>
           </motion.article>
 
-          <motion.article className="immersive-scene" style={{ opacity: solutionOpacity, y: solutionY }}>
+          <motion.article className="immersive-scene" style={{ opacity: isMobile ? 1 : solutionOpacity, y: isMobile ? 0 : solutionY }}>
             <span className="kicker">La soluzione</span>
             <h2>ZOVEN RADICI unifica ogni flusso operativo.</h2>
             <div className="immersive-grid three">
@@ -215,7 +245,7 @@ export function HomePage() {
             </div>
           </motion.article>
 
-          <motion.article className="immersive-scene" style={{ opacity: pricingOpacity, y: pricingY }}>
+          <motion.article className="immersive-scene" style={{ opacity: isMobile ? 1 : pricingOpacity, y: isMobile ? 0 : pricingY }}>
             <span className="kicker">Prezzi</span>
             <h2>Senza abbonamento. Prezzo moderato su richiesta.</h2>
             <div className="immersive-grid two">
@@ -252,7 +282,7 @@ export function HomePage() {
             </div>
           </motion.article>
 
-          <motion.article className="immersive-scene cta" style={{ opacity: ctaOpacity, y: ctaY }}>
+          <motion.article className="immersive-scene cta" style={{ opacity: isMobile ? 1 : ctaOpacity, y: isMobile ? 0 : ctaY }}>
             <h2>Ti mostriamo dove stai perdendo clienti, prenotazioni e vendite.</h2>
             <p>Audit gratuito con analisi concreta del tuo flusso operativo attuale. Nessun impegno.</p>
             <div className="immersive-actions">

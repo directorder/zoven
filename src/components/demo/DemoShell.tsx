@@ -26,6 +26,7 @@ export function DemoShell({ sectionTitle, children, rightPanel }: DemoShellProps
       <aside className="demo-sidebar">
         <Logo />
         <p style={{ marginTop: '0.6rem' }}>Demo completa ZOVEN RADICI</p>
+        <p className="demo-mobile-nav-hint">Scorri i moduli →</p>
         <nav className="demo-nav">
           {links.map((item) => {
             const Icon = item.icon

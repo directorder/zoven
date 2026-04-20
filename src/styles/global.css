@@ -317,6 +317,10 @@ select {
   gap: 0.4rem;
 }
 
+.demo-mobile-nav-hint {
+  display: none;
+}
+
 .demo-nav a {
   border-radius: 12px;
   padding: 0.65rem 0.75rem;
@@ -428,6 +432,56 @@ select {
 
   .hero-phone {
     width: 160px;
+  }
+
+  .demo-main {
+    padding: 0.8rem;
+  }
+
+  .demo-sidebar {
+    padding: 0.9rem 0.8rem 1rem;
+  }
+
+  .demo-mobile-nav-hint {
+    display: block;
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .demo-nav {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    grid-template-columns: none;
+    scrollbar-width: thin;
+  }
+
+  .demo-nav a {
+    flex: 0 0 auto;
+    min-width: max-content;
+    padding: 0.55rem 0.7rem;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .demo-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .demo-topbar h2 {
+    margin: 0;
+    font-size: 1.1rem !important;
+  }
+
+  .detail-panel {
+    width: 100%;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.85rem;
   }
 
   .desktop-only {
@@ -1319,6 +1373,10 @@ h4 {
   letter-spacing: 0.06em;
 }
 
+.immersive-mobile-scroll-cue {
+  display: none;
+}
+
 .immersive-scene {
   position: absolute;
   z-index: 9;
@@ -1504,7 +1562,47 @@ h4 {
 
 @media (max-width: 720px) {
   .immersive-index {
-    height: 780vh;
+    height: auto;
+    min-height: unset;
+    padding: 0.7rem 0 1.2rem;
+  }
+
+  .immersive-index-sticky {
+    position: static;
+    height: auto;
+    display: block;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .immersive-index-bg,
+  .immersive-noise {
+    position: absolute;
+    inset: 0;
+  }
+
+  .immersive-mobile-scroll-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0.4rem 0.9rem 0.7rem;
+    padding: 0.28rem 0.58rem;
+    border: 1px solid rgba(217, 177, 110, 0.25);
+    border-radius: 999px;
+    color: #d8d2bf;
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(10, 16, 13, 0.58);
+  }
+
+  .immersive-mobile-scroll-cue i {
+    width: 7px;
+    height: 7px;
+    border-right: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    transform: rotate(45deg);
+    animation: mobile-scroll-cue 1.35s ease-in-out infinite;
   }
 
   .immersive-stepper {
@@ -1517,15 +1615,17 @@ h4 {
   }
 
   .immersive-nature-float {
-    width: min(54vw, 240px);
-    right: -8vw;
-    top: 24vh;
-    opacity: 0.56;
+    display: none;
   }
 
   .immersive-scene {
+    position: relative;
+    inset: auto;
     width: 92vw;
     padding: 1rem;
+    margin: 0.75rem auto;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .immersive-grid.two,
@@ -1534,8 +1634,14 @@ h4 {
     grid-template-columns: 1fr;
   }
 
-  .immersive-buffer {
-    height: 24vh;
+  .immersive-panel p {
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
+}
+
+@keyframes mobile-scroll-cue {
+  0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.5; }
+  50% { transform: rotate(45deg) translate(3px, 3px); opacity: 1; }
 }
 
