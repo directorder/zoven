@@ -208,9 +208,15 @@ export function HomePage() {
         title: 'Ti mostriamo dove stai perdendo clienti, prenotazioni e vendite.',
         body: 'Audit gratuito con analisi operativa del tuo flusso attuale: concreto, rapido, senza impegno.',
         panel: (
-          <div className="journey-cta-actions">
-            <Button to="/audit">Richiedi audit gratuito</Button>
-            <Button to="/demo/dashboard" variant="ghost">Guarda la demo</Button>
+          <div className="journey-hud-grid two">
+            <div className="journey-chip">
+              <strong>Analisi operativa</strong>
+              <span>Identifichiamo perdite e opportunita reali.</span>
+            </div>
+            <div className="journey-chip">
+              <strong>Roadmap chiara</strong>
+              <span>Priorita, stima impatto economico, piano di intervento.</span>
+            </div>
           </div>
         ),
         mobilePoints: [
