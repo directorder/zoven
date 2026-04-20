@@ -81,6 +81,7 @@ export default function DemoClinic() {
     <div style={{ display: 'flex', height: '100vh', background: '#050505', overflow: 'hidden' }}>
       {/* Sidebar */}
       <motion.aside
+        className="demo-sidebar"
         initial={{ x: -280 }}
         animate={{ x: 0 }}
         transition={{ duration: 0.5 }}
@@ -143,7 +144,7 @@ export default function DemoClinic() {
           padding: '0 24px', flexShrink: 0,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <button onClick={() => setSidebarOpen(!sidebarOpen)}
+            <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}
               style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', padding: 4 }}>
               <LayoutDashboard size={16} />
             </button>
@@ -162,12 +163,47 @@ export default function DemoClinic() {
           </div>
         </div>
 
-        <div style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
+        <div className="demo-content" style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
           <motion.div key={activeNav} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
             {renderContent()}
           </motion.div>
         </div>
       </div>
+
+      {/* Mobile Bottom Nav */}
+      <nav className="demo-bottom-nav" style={{
+        position: 'fixed', bottom: 0, left: 0, right: 0,
+        background: 'rgba(10,10,10,0.97)', backdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+        display: 'none', alignItems: 'stretch', zIndex: 100,
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      }}>
+        {navItems.slice(0, 4).map(item => (
+          <button key={item.id} onClick={() => setActiveNav(item.id)} style={{
+            flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            gap: 4, padding: '10px 4px', background: 'none', border: 'none', cursor: 'pointer',
+            color: activeNav === item.id ? accentLight : 'rgba(255,255,255,0.35)', transition: 'color 0.2s',
+          }}>
+            <item.icon size={20} />
+            <span style={{ fontSize: 10, fontWeight: 600 }}>{item.label}</span>
+          </button>
+        ))}
+        <Link to="/clinic" style={{
+          flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          gap: 4, padding: '10px 4px', color: 'rgba(255,255,255,0.35)', textDecoration: 'none',
+        }}>
+          <ArrowLeft size={20} />
+          <span style={{ fontSize: 10, fontWeight: 600 }}>Esci</span>
+        </Link>
+      </nav>
+      <style>{`
+        @media (max-width: 768px) {
+          .demo-sidebar { display: none !important; }
+          .sidebar-toggle { display: none !important; }
+          .demo-content { padding-bottom: 80px !important; }
+          .demo-bottom-nav { display: flex !important; }
+        }
+      `}</style>
     </div>
   )
 }
@@ -189,7 +225,7 @@ function DashboardView() {
       </div>
 
       {/* Today's Schedule */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: 20, marginBottom: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginBottom: 24 }}>
         <div style={{
           background: 'rgba(255,255,255,0.025)',
           border: '1px solid rgba(255,255,255,0.07)',
@@ -286,8 +322,8 @@ function AppuntamentiView() {
         <KPICard label="No-show Previsti" value="1" sub="storico" />
       </div>
 
-      <div style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <div style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
               {['Ora', 'Paziente', 'Tipo Visita', 'Medico', 'Durata', 'Stato'].map(h => (
@@ -341,8 +377,8 @@ function PazientiView() {
         <KPICard label="Nuovi Mese" value={clinicStats.nuoviPazienti} trend={15} />
       </div>
 
-      <div style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <div style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 560 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
               {['Paziente', 'Età', 'Telefono', 'Ultima Visita', 'Prossima Visita', 'Valore Totale'].map(h => (
