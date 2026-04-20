@@ -267,12 +267,84 @@ function DashboardView() {
 }
 
 function OrdiniView() {
+  const [orders, setOrders] = useState([...tavolaOrdini])
+  const [cart, setCart] = useState<Record<number, number>>({})
+  const [showBuilder, setShowBuilder] = useState(false)
+  const [orderPlaced, setOrderPlaced] = useState(false)
   const [filter, setFilter] = useState('tutti')
+
+  const cartTotal = Object.entries(cart).reduce((sum, [id, qty]) => {
+    const item = tavolaMenu.find(m => m.id === Number(id))
+    return sum + (item ? item.prezzo * qty : 0)
+  }, 0)
+  const cartCount = Object.values(cart).reduce((s, q) => s + q, 0)
+  const deliverooFee = (cartTotal * 0.3).toFixed(2)
+
+  const updateCart = (id: number, delta: number) => {
+    setCart(prev => {
+      const next = { ...prev, [id]: Math.max(0, (prev[id] || 0) + delta) }
+      if (next[id] === 0) delete next[id]
+      return next
+    })
+  }
+
+  const placeOrder = () => {
+    if (cartCount === 0) return
+    const itemNames = Object.entries(cart)
+      .map(([id, qty]) => `${qty}x ${tavolaMenu.find(m => m.id === Number(id))?.nome}`)
+      .join(', ')
+    const newOrder = {
+      id: orders.length + 1,
+      cliente: 'Cliente Demo',
+      canale: 'Online',
+      items: itemNames,
+      totale: Math.round(cartTotal * 100) / 100,
+      ora: new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+      stato: 'nuovo',
+    }
+    setOrders([newOrder, ...orders])
+    setCart({})
+    setShowBuilder(false)
+    setOrderPlaced(true)
+    setTimeout(() => setOrderPlaced(false), 4000)
+  }
+
+  const categories = [...new Set(tavolaMenu.map(m => m.categoria))]
+
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 800, color: 'white' }}>Gestione Ordini</h1>
-        <div style={{ display: 'flex', gap: 8 }}>
+    <div style={{ display: 'flex', gap: 20 }}>
+      {/* Left: Orders list */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <h1 style={{ fontSize: 22, fontWeight: 800, color: 'white' }}>Gestione Ordini</h1>
+          <button onClick={() => setShowBuilder(!showBuilder)} style={{
+            background: showBuilder ? 'rgba(255,255,255,0.08)' : accent,
+            color: 'white', fontSize: 13, fontWeight: 600,
+            padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer',
+          }}>
+            {showBuilder ? '← Chiudi' : '+ Nuovo Ordine Live'}
+          </button>
+        </div>
+
+        {orderPlaced && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)',
+              borderRadius: 12, padding: '12px 20px', marginBottom: 16,
+              display: 'flex', alignItems: 'center', gap: 10,
+            }}
+          >
+            <span style={{ fontSize: 20 }}>🎉</span>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#22c55e' }}>Ordine inviato in cucina!</div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>Risparmio: € {deliverooFee} rispetto a Deliveroo (30%)</div>
+            </div>
+          </motion.div>
+        )}
+
+        <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
           {['tutti', 'nuovo', 'in preparazione', 'pronto'].map(f => (
             <button key={f} onClick={() => setFilter(f)} style={{
               background: filter === f ? `${accent}33` : 'transparent',
@@ -282,40 +354,119 @@ function OrdiniView() {
             }}>{f}</button>
           ))}
         </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {orders
+            .filter(o => filter === 'tutti' || o.stato === filter)
+            .map(o => (
+              <div key={o.id} style={{
+                background: 'rgba(255,255,255,0.025)',
+                border: `1px solid ${o.stato === 'nuovo' ? `${accent}44` : 'rgba(255,255,255,0.07)'}`,
+                borderRadius: 14, padding: '16px 20px',
+                display: 'flex', alignItems: 'center', gap: 16,
+              }}>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: `${accent}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>🍕</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: 'white' }}>#{o.id} – {o.cliente}</span>
+                    <Badge color={o.canale === 'Online' ? '#3b82f6' : '#22c55e'}>{o.canale}</Badge>
+                  </div>
+                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.items}</div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div style={{ fontSize: 17, fontWeight: 800, color: accentLight, marginBottom: 4 }}>€ {o.totale}</div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'flex-end' }}>
+                    <Clock size={11} /> {o.ora}
+                  </div>
+                </div>
+                <Badge color={
+                  o.stato === 'nuovo' ? accent :
+                  o.stato === 'in preparazione' ? '#f59e0b' :
+                  o.stato === 'pronto' ? '#3b82f6' : '#22c55e'
+                }>{o.stato}</Badge>
+              </div>
+            ))}
+        </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {tavolaOrdini
-          .filter(o => filter === 'tutti' || o.stato === filter)
-          .map(o => (
-            <div key={o.id} style={{
-              background: 'rgba(255,255,255,0.025)',
-              border: `1px solid ${o.stato === 'nuovo' ? `${accent}33` : 'rgba(255,255,255,0.07)'}`,
-              borderRadius: 14, padding: '16px 20px',
-              display: 'flex', alignItems: 'center', gap: 16,
-            }}>
-              <div style={{ width: 48, height: 48, borderRadius: 12, background: `${accent}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>🍕</div>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                  <span style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>#{o.id} – {o.cliente}</span>
-                  <Badge color={o.canale === 'Online' ? '#3b82f6' : '#22c55e'}>{o.canale}</Badge>
-                </div>
-                <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{o.items}</div>
+      {/* Right: Live order builder */}
+      {showBuilder && (
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          style={{
+            width: 300, flexShrink: 0,
+            background: '#0d0d0d', border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: 20, padding: 20, display: 'flex', flexDirection: 'column',
+            maxHeight: 'calc(100vh - 110px)', position: 'sticky', top: 0,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
+            <h3 style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Nuovo Ordine</h3>
+          </div>
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 16 }}>Canale diretto — zero commissioni</p>
+
+          <div style={{ flex: 1, overflowY: 'auto', marginBottom: 16 }}>
+            {categories.map(cat => (
+              <div key={cat} style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{cat}</div>
+                {tavolaMenu.filter(m => m.categoria === cat && m.disponibile).map(item => (
+                  <div key={item.id} style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '9px 0', borderBottom: '1px solid rgba(255,255,255,0.04)',
+                  }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: 'white' }}>{item.nome}</div>
+                      <div style={{ fontSize: 12, color: accentLight, fontWeight: 600 }}>€ {item.prezzo.toFixed(2)}</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <button onClick={() => updateCart(item.id, -1)} style={{
+                        width: 26, height: 26, borderRadius: 7, background: 'rgba(255,255,255,0.08)',
+                        border: 'none', color: 'white', cursor: 'pointer', fontSize: 16,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>−</button>
+                      <span style={{ width: 20, textAlign: 'center', fontSize: 13, fontWeight: 700, color: cart[item.id] ? 'white' : 'rgba(255,255,255,0.2)' }}>
+                        {cart[item.id] || 0}
+                      </span>
+                      <button onClick={() => updateCart(item.id, 1)} style={{
+                        width: 26, height: 26, borderRadius: 7, background: `${accent}44`,
+                        border: 'none', color: 'white', cursor: 'pointer', fontSize: 16,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>+</button>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 18, fontWeight: 800, color: accentLight, marginBottom: 4 }}>€ {o.totale}</div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'flex-end' }}>
-                  <Clock size={11} /> {o.ora}
-                </div>
-              </div>
-              <Badge color={
-                o.stato === 'nuovo' ? accent :
-                o.stato === 'in preparazione' ? '#f59e0b' :
-                o.stato === 'pronto' ? '#3b82f6' : '#22c55e'
-              }>{o.stato}</Badge>
+            ))}
+          </div>
+
+          {/* Cart summary */}
+          <div style={{
+            background: 'rgba(255,255,255,0.03)', borderRadius: 14, padding: 16,
+            border: '1px solid rgba(255,255,255,0.07)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+              <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>{cartCount} prodotti</span>
+              <span style={{ fontSize: 16, fontWeight: 800, color: 'white' }}>€ {cartTotal.toFixed(2)}</span>
             </div>
-          ))}
-      </div>
+            {cartCount > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                <span style={{ fontSize: 12, color: '#22c55e' }}>💰 Risparmio vs Deliveroo</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#22c55e' }}>+ € {deliverooFee}</span>
+              </div>
+            )}
+            <button onClick={placeOrder} disabled={cartCount === 0} style={{
+              width: '100%', background: cartCount > 0 ? accent : 'rgba(255,255,255,0.1)',
+              color: 'white', fontSize: 13, fontWeight: 700, padding: '11px',
+              borderRadius: 10, border: 'none', cursor: cartCount > 0 ? 'pointer' : 'not-allowed',
+              opacity: cartCount > 0 ? 1 : 0.5,
+            }}>
+              {cartCount > 0 ? `🍕 Invia in Cucina — € ${cartTotal.toFixed(2)}` : 'Aggiungi prodotti'}
+            </button>
+          </div>
+        </motion.div>
+      )}
     </div>
   )
 }

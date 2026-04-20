@@ -379,17 +379,39 @@ function PazientiView() {
 }
 
 function CentralinoView() {
+  const [chatStep, setChatStep] = useState(0)
+  const [isTyping, setIsTyping] = useState(false)
+
   const chiamatePerse = [
     { numero: '+39 340 111 2233', ora: '08:47', stato: 'WhatsApp inviato', minuti: 3 },
     { numero: '+39 347 555 6677', ora: '09:12', stato: 'WhatsApp inviato', minuti: 3 },
     { numero: '+39 331 888 9900', ora: '10:04', stato: 'In attesa risposta', minuti: 2 },
   ]
 
+  const chatMessages = [
+    { from: 'ai', text: 'Salve! 👋 Siamo Clinica Ferri. Abbiamo notato la sua chiamata e siamo spiacenti di non aver risposto.\n\nClicchi qui per prenotare direttamente:\n→ [link prenotazione]\n\nOppure ci scriva qui, siamo a disposizione!', time: '09:12' },
+    { from: 'user', text: 'Ciao! Avrei bisogno di un appuntamento per una visita di controllo.', time: '09:14' },
+    { from: 'ai', text: 'Certo! 😊 Abbiamo disponibilità questa settimana:\n\n📅 Mer 22 Apr — ore 10:00\n📅 Gio 23 Apr — ore 14:30\n📅 Ven 24 Apr — ore 09:00\n\nQuale preferisce?', time: '09:14' },
+    { from: 'user', text: 'Giovedì alle 14:30 è perfetto!', time: '09:16' },
+    { from: 'ai', text: '✅ Perfetto! Ho prenotato:\n\n👤 Visita di controllo\n📅 Giovedì 23 Aprile · ore 14:30\n📍 Clinica Ferri, Via Roma 12\n\nRiceverà un reminder automatico il giorno prima. A presto! 🏥', time: '09:16' },
+  ]
+
+  const visibleMessages = chatMessages.slice(0, chatStep)
+
+  const advance = () => {
+    if (chatStep >= chatMessages.length || isTyping) return
+    setIsTyping(true)
+    setTimeout(() => {
+      setChatStep(s => s + 1)
+      setIsTyping(false)
+    }, 900)
+  }
+
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 22, fontWeight: 800, color: 'white', marginBottom: 8 }}>Centralino AI</h1>
-        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>Recupero automatico chiamate perse. Ogni chiamata senza risposta → WhatsApp entro 3 minuti.</p>
+        <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>Ogni chiamata persa → WhatsApp automatico entro 3 minuti. Zero pazienti persi.</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 16, marginBottom: 28 }}>
@@ -400,62 +422,178 @@ function CentralinoView() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+        {/* Live AI Chat Simulator */}
         <div style={{
-          background: 'rgba(239,68,68,0.05)',
-          border: '1px solid rgba(239,68,68,0.15)',
-          borderRadius: 16, padding: 24,
+          background: `${accent}08`, border: `1px solid ${accent}22`,
+          borderRadius: 20, padding: 24, display: 'flex', flexDirection: 'column',
+          minHeight: 460,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-            <AlertCircle size={18} color="#ef4444" />
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Chiamate Perse Oggi</h3>
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
+            <h3 style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Simulatore AI Live</h3>
+            <Badge color={accent}>Demo interattiva</Badge>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {chiamatePerse.map((c, i) => (
-              <div key={i} style={{
-                padding: '14px', borderRadius: 12,
-                background: 'rgba(255,255,255,0.025)',
-                border: '1px solid rgba(255,255,255,0.06)',
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: 'white' }}>{c.numero}</span>
-                  <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>{c.ora}</span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Badge color={c.stato === 'WhatsApp inviato' ? '#22c55e' : '#f59e0b'}>{c.stato}</Badge>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>dopo {c.minuti} min</span>
-                </div>
+
+          {chatStep === 0 ? (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, padding: '20px 0' }}>
+              <div style={{
+                width: 72, height: 72, borderRadius: '50%',
+                background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.25)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32,
+              }}>📞</div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 14, fontWeight: 600, color: 'white', marginBottom: 6 }}>Simulazione Centralino AI</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', maxWidth: 240 }}>Guarda come l'AI recupera automaticamente un paziente da una chiamata persa</div>
               </div>
-            ))}
-          </div>
+              <button onClick={advance} style={{
+                background: accent, color: 'white', fontSize: 14, fontWeight: 700,
+                padding: '12px 28px', borderRadius: 12, border: 'none', cursor: 'pointer',
+              }}>📞 Simula Chiamata Persa</button>
+            </div>
+          ) : (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+              {/* Missed call notification */}
+              <div style={{
+                background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+                borderRadius: 12, padding: '10px 14px', marginBottom: 16,
+                display: 'flex', alignItems: 'center', gap: 10,
+              }}>
+                <span style={{ fontSize: 18 }}>📵</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#ef4444' }}>Chiamata Persa</div>
+                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>+39 347 555 6677 · ore 09:12</div>
+                </div>
+                <Badge color="#f59e0b">⚡ AI Attivato</Badge>
+              </div>
+
+              {/* Chat messages */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 12, minHeight: 220 }}>
+                {visibleMessages.map((msg, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    style={{ display: 'flex', justifyContent: msg.from === 'ai' ? 'flex-start' : 'flex-end' }}
+                  >
+                    <div style={{
+                      maxWidth: '88%',
+                      background: msg.from === 'ai' ? 'rgba(255,255,255,0.06)' : `${accent}33`,
+                      border: `1px solid ${msg.from === 'ai' ? 'rgba(255,255,255,0.08)' : `${accent}55`}`,
+                      borderRadius: msg.from === 'ai' ? '4px 14px 14px 14px' : '14px 4px 14px 14px',
+                      padding: '10px 14px',
+                    }}>
+                      {msg.from === 'ai' && (
+                        <div style={{ fontSize: 10, color: accentLight, fontWeight: 700, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                          🤖 AI Centralino
+                        </div>
+                      )}
+                      <div style={{ fontSize: 13, color: 'white', lineHeight: 1.6, whiteSpace: 'pre-line' }}>{msg.text}</div>
+                      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginTop: 4, textAlign: 'right' }}>{msg.time}</div>
+                    </div>
+                  </motion.div>
+                ))}
+
+                {isTyping && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: 'flex', gap: 4, padding: '8px 14px', alignItems: 'center' }}>
+                    {[0, 1, 2].map(i => (
+                      <motion.div
+                        key={i}
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
+                        style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(255,255,255,0.4)' }}
+                      />
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+
+              {chatStep < chatMessages.length ? (
+                <button onClick={advance} disabled={isTyping} style={{
+                  background: accent, color: 'white', fontSize: 13, fontWeight: 600,
+                  padding: '10px 20px', borderRadius: 10, border: 'none', cursor: isTyping ? 'not-allowed' : 'pointer',
+                  opacity: isTyping ? 0.6 : 1,
+                }}>
+                  {isTyping ? '...' : chatStep % 2 === 0 ? '👤 Risposta del paziente →' : '🤖 Risposta AI →'}
+                </button>
+              ) : (
+                <div style={{
+                  background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.25)',
+                  borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
+                }}>
+                  <span style={{ fontSize: 20 }}>✅</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: '#22c55e' }}>Paziente Recuperato!</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>Appuntamento prenotato automaticamente</div>
+                  </div>
+                  <button onClick={() => { setChatStep(0) }} style={{
+                    background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)',
+                    color: 'rgba(255,255,255,0.6)', fontSize: 12, padding: '6px 12px', borderRadius: 8, cursor: 'pointer',
+                  }}>Ricomincia</button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        <div style={{
-          background: 'rgba(37,99,235,0.06)',
-          border: '1px solid rgba(37,99,235,0.15)',
-          borderRadius: 16, padding: 24,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-            <CheckCircle size={18} color="#22c55e" />
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Template WhatsApp</h3>
-          </div>
+        {/* Right: call log + template */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: 12, padding: '16px',
-            fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7,
-            fontFamily: 'monospace',
+            background: 'rgba(239,68,68,0.05)',
+            border: '1px solid rgba(239,68,68,0.15)',
+            borderRadius: 16, padding: 24,
           }}>
-            Salve! 👋 Abbiamo visto la sua chiamata ma eravamo momentaneamente occupati.
-            <br /><br />
-            Clicchi qui per prenotare il suo appuntamento:
-            <br />
-            <span style={{ color: accentLight }}>→ [link prenotazione]</span>
-            <br /><br />
-            Oppure ci risponda qui. Siamo disponibili!
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+              <AlertCircle size={18} color="#ef4444" />
+              <h3 style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Chiamate Perse Oggi</h3>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {chiamatePerse.map((c, i) => (
+                <div key={i} style={{
+                  padding: '14px', borderRadius: 12,
+                  background: 'rgba(255,255,255,0.025)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: 'white' }}>{c.numero}</span>
+                    <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>{c.ora}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Badge color={c.stato === 'WhatsApp inviato' ? '#22c55e' : '#f59e0b'}>{c.stato}</Badge>
+                    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>dopo {c.minuti} min</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>
-            <Badge color={accent}>Personalizzabile</Badge>
-            <Badge color="#22c55e">Invio Automatico</Badge>
+
+          <div style={{
+            background: 'rgba(37,99,235,0.06)',
+            border: '1px solid rgba(37,99,235,0.15)',
+            borderRadius: 16, padding: 24,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+              <CheckCircle size={18} color="#22c55e" />
+              <h3 style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Template WhatsApp</h3>
+            </div>
+            <div style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 12, padding: '16px',
+              fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7,
+              fontFamily: 'monospace',
+            }}>
+              Salve! 👋 Abbiamo visto la sua chiamata ma eravamo momentaneamente occupati.
+              <br /><br />
+              Clicchi qui per prenotare il suo appuntamento:
+              <br />
+              <span style={{ color: accentLight }}>→ [link prenotazione]</span>
+              <br /><br />
+              Oppure ci risponda qui. Siamo disponibili!
+            </div>
+            <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>
+              <Badge color={accent}>Personalizzabile</Badge>
+              <Badge color="#22c55e">Invio Automatico</Badge>
+            </div>
           </div>
         </div>
       </div>

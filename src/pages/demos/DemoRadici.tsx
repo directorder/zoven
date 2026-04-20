@@ -390,16 +390,179 @@ function ClientiView() {
 }
 
 function PrenotazioniView() {
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1)
+  const [checkin, setCheckin] = useState('2026-04-25')
+  const [checkout, setCheckout] = useState('2026-04-28')
+  const [guests, setGuests] = useState(2)
+  const [selectedRoom, setSelectedRoom] = useState<number | null>(null)
+
+  const availableRooms = [
+    { id: 4, nome: 'Suite Vigneto', posti: 4, prezzo: 220, desc: 'Vista panoramica sul vigneto, vasca idromassaggio' },
+    { id: 5, nome: 'Camera 5 – Mansarda', posti: 2, prezzo: 130, desc: 'Travi a vista, atmosfera romantica, letto king size' },
+  ]
+
+  const nights = Math.max(1, Math.round((new Date(checkout).getTime() - new Date(checkin).getTime()) / 86400000))
+  const room = availableRooms.find(r => r.id === selectedRoom)
+  const total = room ? room.prezzo * nights : 0
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
         <h1 style={{ fontSize: 22, fontWeight: 800, color: 'white' }}>Prenotazioni</h1>
-        <button style={{
-          background: accent, color: 'white', fontSize: 13, fontWeight: 600,
-          padding: '10px 18px', borderRadius: 10, border: 'none', cursor: 'pointer',
-        }}>+ Nuova Prenotazione</button>
       </div>
 
+      {/* LIVE BOOKING WIZARD */}
+      <div style={{
+        background: `${accent}0d`, border: `1px solid ${accent}33`,
+        borderRadius: 20, padding: 28, marginBottom: 32,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px #22c55e' }} />
+          <span style={{ fontSize: 15, fontWeight: 700, color: 'white' }}>Simulatore Prenotazione Live</span>
+          <Badge color={accent}>Demo interattiva</Badge>
+        </div>
+
+        {/* Step indicators */}
+        <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
+          {['Cerca', 'Scegli Camera', 'Riepilogo', 'Conferma'].map((s, i) => (
+            <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{
+                width: 24, height: 24, borderRadius: '50%', flexShrink: 0,
+                background: step > i + 1 ? '#22c55e' : step === i + 1 ? accent : 'rgba(255,255,255,0.1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 11, fontWeight: 700, color: 'white',
+              }}>{step > i + 1 ? '✓' : i + 1}</div>
+              <span style={{ fontSize: 12, color: step === i + 1 ? 'white' : 'rgba(255,255,255,0.35)', fontWeight: step === i + 1 ? 600 : 400 }}>{s}</span>
+              {i < 3 && <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: 16 }}>›</span>}
+            </div>
+          ))}
+        </div>
+
+        {step === 1 && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} key="step1">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 12, alignItems: 'end', marginBottom: 16 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.4)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Check-in</label>
+                <input type="date" value={checkin} onChange={e => setCheckin(e.target.value)} style={{
+                  width: '100%', padding: '10px 14px', borderRadius: 10, fontSize: 14, boxSizing: 'border-box',
+                  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
+                  color: 'white', outline: 'none', colorScheme: 'dark',
+                }} />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.4)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Check-out</label>
+                <input type="date" value={checkout} onChange={e => setCheckout(e.target.value)} style={{
+                  width: '100%', padding: '10px 14px', borderRadius: 10, fontSize: 14, boxSizing: 'border-box',
+                  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
+                  color: 'white', outline: 'none', colorScheme: 'dark',
+                }} />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.4)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Ospiti</label>
+                <div style={{ display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, overflow: 'hidden' }}>
+                  <button onClick={() => setGuests(Math.max(1, guests - 1))} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: 18, padding: '10px 14px', lineHeight: 1 }}>−</button>
+                  <span style={{ flex: 1, textAlign: 'center', color: 'white', fontWeight: 600, fontSize: 14 }}>{guests} ospiti</span>
+                  <button onClick={() => setGuests(Math.min(6, guests + 1))} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', fontSize: 18, padding: '10px 14px', lineHeight: 1 }}>+</button>
+                </div>
+              </div>
+            </div>
+            <button onClick={() => setStep(2)} style={{
+              background: accent, color: 'white', fontSize: 14, fontWeight: 700,
+              padding: '12px 28px', borderRadius: 10, border: 'none', cursor: 'pointer',
+            }}>Cerca camere disponibili →</button>
+          </motion.div>
+        )}
+
+        {step === 2 && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} key="step2">
+            <p style={{ fontSize: 13, color: accentLight, marginBottom: 16, fontWeight: 600 }}>
+              🏡 {nights} notti · {guests} ospiti · {checkin} → {checkout}
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14, marginBottom: 20 }}>
+              {availableRooms.map(r => (
+                <div key={r.id} onClick={() => setSelectedRoom(r.id)} style={{
+                  padding: 18, borderRadius: 14, cursor: 'pointer',
+                  background: selectedRoom === r.id ? `${accent}22` : 'rgba(255,255,255,0.04)',
+                  border: `2px solid ${selectedRoom === r.id ? accent : 'rgba(255,255,255,0.08)'}`,
+                  transition: 'all 0.2s',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: 'white' }}>{r.nome}</span>
+                    <span style={{ fontSize: 17, fontWeight: 800, color: accentLight }}>€{r.prezzo}<span style={{ fontSize: 11, fontWeight: 400, color: 'rgba(255,255,255,0.4)' }}>/notte</span></span>
+                  </div>
+                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 10 }}>{r.desc}</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Badge color="#22c55e">{r.posti} posti</Badge>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: selectedRoom === r.id ? accentLight : 'rgba(255,255,255,0.35)' }}>
+                      Totale: € {r.prezzo * nights}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button onClick={() => setStep(1)} style={{ background: 'transparent', color: 'rgba(255,255,255,0.4)', fontSize: 13, padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer' }}>← Indietro</button>
+              <button onClick={() => { if (selectedRoom) setStep(3) }} style={{
+                background: selectedRoom ? accent : 'rgba(255,255,255,0.1)',
+                color: 'white', fontSize: 14, fontWeight: 700, padding: '10px 24px', borderRadius: 10, border: 'none',
+                cursor: selectedRoom ? 'pointer' : 'not-allowed', opacity: selectedRoom ? 1 : 0.5,
+              }}>Continua →</button>
+            </div>
+          </motion.div>
+        )}
+
+        {step === 3 && room && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} key="step3">
+            <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, padding: 20, marginBottom: 16, border: '1px solid rgba(255,255,255,0.07)' }}>
+              <h4 style={{ fontSize: 14, fontWeight: 700, color: 'white', marginBottom: 14 }}>Riepilogo Prenotazione</h4>
+              {[
+                ['Camera', room.nome],
+                ['Check-in', checkin],
+                ['Check-out', checkout],
+                ['Ospiti', `${guests} persone`],
+                ['Durata', `${nights} notti`],
+                ['Prezzo/notte', `€ ${room.prezzo}`],
+              ].map(([k, v]) => (
+                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                  <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{k}</span>
+                  <span style={{ fontSize: 13, color: 'white', fontWeight: 500 }}>{v}</span>
+                </div>
+              ))}
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '14px 0 0' }}>
+                <span style={{ fontSize: 16, fontWeight: 700, color: 'white' }}>Totale</span>
+                <span style={{ fontSize: 24, fontWeight: 800, color: accentLight }}>€ {total}</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button onClick={() => setStep(2)} style={{ background: 'transparent', color: 'rgba(255,255,255,0.4)', fontSize: 13, padding: '10px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer' }}>← Indietro</button>
+              <button onClick={() => setStep(4)} style={{ flex: 1, background: accent, color: 'white', fontSize: 14, fontWeight: 700, padding: '12px', borderRadius: 10, border: 'none', cursor: 'pointer' }}>
+                ✓ Conferma Prenotazione
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {step === 4 && room && (
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} key="step4" style={{ textAlign: 'center', padding: '16px 0' }}>
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 12 }} style={{ fontSize: 52, marginBottom: 16 }}>🎉</motion.div>
+            <h3 style={{ fontSize: 20, fontWeight: 800, color: 'white', marginBottom: 8 }}>Prenotazione Confermata!</h3>
+            <p style={{ fontSize: 15, color: accentLight, marginBottom: 4, fontWeight: 600 }}>{room.nome} · {nights} notti · € {total}</p>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>Notifiche automatiche inviate al cliente via WhatsApp e SMS.</p>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 20 }}>
+              <Badge color="#22c55e">✓ SMS inviato</Badge>
+              <Badge color="#22c55e">✓ WhatsApp inviato</Badge>
+              <Badge color={accent}>✓ Calendario aggiornato</Badge>
+              <Badge color="#3b82f6">✓ Pagamento registrato</Badge>
+            </div>
+            <button onClick={() => { setStep(1); setSelectedRoom(null) }} style={{
+              background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)',
+              fontSize: 13, padding: '10px 24px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer',
+            }}>Nuova ricerca</button>
+          </motion.div>
+        )}
+      </div>
+
+      {/* EXISTING BOOKINGS */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 16, marginBottom: 28 }}>
         <KPICard label="Totale Mese" value={radiciStats.prenotazioniMese} trend={12} />
         <KPICard label="Camere Attive" value={`${radiciStats.camereOccupate}/${radiciStats.totaleCamere}`} />
