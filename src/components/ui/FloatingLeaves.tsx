@@ -56,6 +56,7 @@ const LEAVES: Leaf[] = [
 export function FloatingLeaves() {
   return (
     <div
+      className="floating-leaves-layer"
       aria-hidden="true"
       style={{
         position: 'fixed',
