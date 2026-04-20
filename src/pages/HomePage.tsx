@@ -39,6 +39,7 @@ type HudContent = {
   title: string
   body: string
   panel: ReactNode
+  mobilePoints: string[]
 }
 
 function chapterIndexFromProgress(progress: number) {
@@ -136,6 +137,11 @@ export function HomePage() {
             ))}
           </div>
         ),
+        mobilePoints: [
+          'Un solo sistema per clienti, camere, tavoli e bottega.',
+          'Dati centralizzati, decisioni piu rapide, meno errori.',
+          'Focalizzato su margine operativo reale, non vanity metrics.',
+        ],
       },
       {
         kicker: 'Problema',
@@ -151,6 +157,11 @@ export function HomePage() {
             ))}
           </div>
         ),
+        mobilePoints: [
+          'Prenotazioni e richieste sparse su canali diversi.',
+          'Storico cliente frammentato e poco utilizzabile.',
+          'Upsell e riacquisto lasciati al caso.',
+        ],
       },
       {
         kicker: 'Soluzione',
@@ -166,6 +177,11 @@ export function HomePage() {
             ))}
           </div>
         ),
+        mobilePoints: [
+          'Dashboard unificata per operativita quotidiana.',
+          'CRM vivo con segmenti e azioni immediate.',
+          'Automazioni pratiche per vendite dirette e ritorni.',
+        ],
       },
       {
         kicker: 'Prezzi',
@@ -181,6 +197,11 @@ export function HomePage() {
             ))}
           </div>
         ),
+        mobilePoints: [
+          'Nessun canone mensile obbligatorio.',
+          'Progetto dimensionato sulla tua realta operativa.',
+          'Piano e setup definiti in audit con stima chiara.',
+        ],
       },
       {
         kicker: 'Azione',
@@ -192,6 +213,11 @@ export function HomePage() {
             <Button to="/demo/dashboard" variant="ghost">Guarda la demo</Button>
           </div>
         ),
+        mobilePoints: [
+          'Analisi flusso operativo attuale.',
+          'Roadmap con priorita e impatto economico.',
+          'Nessun impegno, output concreto e azionabile.',
+        ],
       },
     ]
   }, [])
@@ -248,23 +274,52 @@ export function HomePage() {
 
         {isMobile && (
           <div className="journey-mobile-flow">
+            <section className="journey-mobile-hero" id="intro">
+              <Badge>ZOVEN RADICI</Badge>
+              <h1>Il sistema operativo per agriturismi e aziende agricole.</h1>
+              <p>Una demo pensata per farti vedere in 2 minuti dove stai perdendo margine e come recuperarlo.</p>
+              <div className="journey-cta-actions">
+                <Button to="/audit">Richiedi audit gratuito</Button>
+                <Button to="/demo/dashboard" variant="ghost">Guarda la demo</Button>
+              </div>
+            </section>
+
             <div className="journey-mobile-cue" aria-hidden="true">
-              <span>Scorri la storia</span>
+              <span>Scorri</span>
               <i />
             </div>
 
-            {hudContent.map((chapter, index) => (
-              <article key={anchors[index]} className="journey-mobile-card" id={anchors[index]}>
+            <nav className="journey-mobile-steps" aria-label="Percorso demo">
+              {steps.map((step, index) => (
+                <a key={step} href={`#${anchors[index]}`}>{step}</a>
+              ))}
+            </nav>
+
+            {hudContent.slice(1).map((chapter, index) => (
+              <article key={anchors[index + 1]} className="journey-mobile-card" id={anchors[index + 1]}>
                 <Badge>{chapter.kicker}</Badge>
                 <h2>{chapter.title}</h2>
                 <p>{chapter.body}</p>
-                {chapter.panel}
-                <div className="journey-cta-actions">
-                  <Button to="/audit">Richiedi audit gratuito</Button>
-                  <Button to="/demo/dashboard" variant="ghost">Guarda la demo</Button>
-                </div>
+                <ul className="journey-mobile-points">
+                  {chapter.mobilePoints.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+
+                {index === hudContent.slice(1).length - 1 ? (
+                  <div className="journey-cta-actions">
+                    <Button to="/audit">Richiedi audit gratuito</Button>
+                    <Button to="/demo/dashboard" variant="ghost">Guarda la demo</Button>
+                  </div>
+                ) : (
+                  <p className="journey-next-step">Continua verso: {steps[index + 2]}</p>
+                )}
               </article>
             ))}
+
+            <div className="journey-mobile-final-link">
+              <Link to="/contatti">Parla direttamente con ZOVEN</Link>
+            </div>
           </div>
         )}
       </section>
