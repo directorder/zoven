@@ -67,14 +67,14 @@ export default function ATavolaPage() {
               Basta pagare il 30% a Deliveroo e JustEat. Il tuo canale di ordini online, WhatsApp e SEO locale che ti porta clienti diretti, fidelizzati, tuoi.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+il+mio+ristorante." target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#e05c2a', color: 'white',
                 fontSize: 15, fontWeight: 700, padding: '15px 32px', borderRadius: 14,
                 textDecoration: 'none', boxShadow: '0 0 40px rgba(224,92,42,0.4)',
               }}>
                 Richiedi Audit Gratuito <ArrowRight size={16} />
-              </Link>
+              </a>
               <Link to="/demo/a-tavola" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
@@ -304,14 +304,14 @@ export default function ATavolaPage() {
               Mostriamo nel nostro audit esattamente quanto stai perdendo e come recuperarlo.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center' }}>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+il+mio+ristorante." target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#e05c2a', color: 'white',
                 fontSize: 15, fontWeight: 700, padding: '15px 32px', borderRadius: 14,
                 textDecoration: 'none',
               }}>
                 Richiedi Audit Gratuito <ArrowRight size={16} />
-              </Link>
+              </a>
               <Link to="/demo/a-tavola" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',

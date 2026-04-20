@@ -90,7 +90,7 @@ export default function Button({
     </motion.div>
   )
   if (href) return (
-    <motion.a href={href} {...motionProps} style={finalStyle}>{children}</motion.a>
+    <motion.a href={href} target="_blank" rel="noopener noreferrer" {...motionProps} style={finalStyle}>{children}</motion.a>
   )
   return (
     <motion.button type={type} onClick={onClick} {...motionProps} style={finalStyle}>

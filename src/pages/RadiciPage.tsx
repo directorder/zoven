@@ -68,14 +68,14 @@ export default function RadiciPage() {
               Un sistema unico che gestisce prenotazioni, CRM, vendita diretta, fidelizzazione e comunicazione. Smetti di perdere clienti e fatturato per mancanza di strumenti.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+il+mio+agriturismo." target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#4a7c59', color: 'white',
                 fontSize: 15, fontWeight: 700, padding: '15px 32px', borderRadius: 14,
                 textDecoration: 'none', boxShadow: '0 0 40px rgba(74,124,89,0.4)',
               }}>
                 Richiedi Audit Gratuito <ArrowRight size={16} />
-              </Link>
+              </a>
               <Link to="/demo/radici" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
@@ -271,14 +271,14 @@ export default function RadiciPage() {
               Audit gratuito. Analizziamo la tua operatività e ti mostriamo il potenziale nascosto.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center' }}>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+il+mio+agriturismo." target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#4a7c59', color: 'white',
                 fontSize: 15, fontWeight: 700, padding: '15px 32px', borderRadius: 14,
                 textDecoration: 'none',
               }}>
                 Richiedi Audit Gratuito <ArrowRight size={16} />
-              </Link>
+              </a>
               <Link to="/demo/radici" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',

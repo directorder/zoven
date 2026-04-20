@@ -137,7 +137,7 @@ export default function Navbar() {
             Contatti
           </Link>
 
-          <Link to="/contact" style={{
+          <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+la+mia+attivit%C3%A0." target="_blank" rel="noopener noreferrer" style={{
             display: 'inline-flex', alignItems: 'center',
             background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
             color: 'white', fontSize: 13, fontWeight: 600,
@@ -149,7 +149,7 @@ export default function Navbar() {
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
             Richiedi Audit Gratuito
-          </Link>
+          </a>
         </nav>
 
         {/* Mobile hamburger */}
@@ -198,13 +198,13 @@ export default function Navbar() {
                 borderBottom: '1px solid rgba(255,255,255,0.05)',
                 fontSize: 15, fontWeight: 600, color: 'white', textDecoration: 'none',
               }}>Contatti</Link>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+la+mia+attivit%C3%A0." target="_blank" rel="noopener noreferrer" style={{
                 display: 'block', marginTop: 16,
                 background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
                 color: 'white', fontSize: 14, fontWeight: 600,
                 padding: '14px 20px', borderRadius: 12,
                 textDecoration: 'none', textAlign: 'center',
-              }}>Richiedi Audit Gratuito</Link>
+              }}>Richiedi Audit Gratuito</a>
             </div>
           </motion.div>
         )}

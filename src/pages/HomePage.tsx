@@ -422,7 +422,7 @@ export default function HomePage() {
       {/* WHY ZOVEN */}
       <section className="section" ref={whyRef as any} style={{ background: 'rgba(255,255,255,0.015)', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+          <div className="why-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={whyInView ? { opacity: 1, x: 0 } : {}}
@@ -440,7 +440,7 @@ export default function HomePage() {
                 smette di perdere clienti per mancanza di follow-up, e smette di
                 dipendere da piattaforme che erodono i margini.
               </p>
-              <Button to="/contact" size="lg">
+              <Button href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+la+mia+attivit%C3%A0." size="lg">
                 Richiedi Audit Gratuito <ArrowRight size={16} />
               </Button>
             </motion.div>
@@ -651,7 +651,7 @@ export default function HomePage() {
               <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.5)', marginBottom: 44, maxWidth: 500, margin: '0 auto 44px' }}>
                 Inizia con un audit gratuito. Analizziamo la tua operatività e ti mostriamo dove stai perdendo soldi.
               </p>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+la+mia+attivit%C3%A0." target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 10,
                 background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
                 color: 'white', fontSize: 16, fontWeight: 700,
@@ -660,7 +660,7 @@ export default function HomePage() {
                 boxShadow: '0 0 60px rgba(124,58,237,0.5)',
               }}>
                 Richiedi Audit Gratuito <ArrowRight size={18} />
-              </Link>
+              </a>
             </div>
           </motion.div>
         </div>

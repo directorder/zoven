@@ -83,13 +83,13 @@ export default function Footer() {
               <Phone size={13} color="rgba(255,255,255,0.4)" />
               +39 350 538 3769
             </a>
-            <Link to="/contact" style={{
+            <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+la+mia+attivit%C3%A0." target="_blank" rel="noopener noreferrer" style={{
               display: 'inline-flex', marginTop: 8,
               background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
               color: 'white', fontSize: 13, fontWeight: 600,
               padding: '10px 18px', borderRadius: 10,
               textDecoration: 'none',
-            }}>Audit Gratuito</Link>
+            }}>Audit Gratuito</a>
           </div>
         </div>
 

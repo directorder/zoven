@@ -67,14 +67,14 @@ export default function ClinicPage() {
               Ogni chiamata persa è un paziente perso. Il nostro sistema cattura, conferma e segue ogni appuntamento automaticamente — 24 ore su 24, 7 giorni su 7.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+la+mia+clinica." target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#2563eb', color: 'white',
                 fontSize: 15, fontWeight: 700, padding: '15px 32px', borderRadius: 14,
                 textDecoration: 'none', boxShadow: '0 0 40px rgba(37,99,235,0.4)',
               }}>
                 Richiedi Audit Gratuito <ArrowRight size={16} />
-              </Link>
+              </a>
               <Link to="/demo/clinic" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
@@ -304,14 +304,14 @@ export default function ClinicPage() {
               Scopri quanti pazienti stai perdendo ogni mese. Audit gratuito, nessun impegno.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center' }}>
-              <Link to="/contact" style={{
+              <a href="https://wa.me/393505383769?text=Ciao!+Vorrei+richiedere+un+audit+gratuito+per+la+mia+clinica." target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#2563eb', color: 'white',
                 fontSize: 15, fontWeight: 700, padding: '15px 32px', borderRadius: 14,
                 textDecoration: 'none',
               }}>
                 Richiedi Audit Gratuito <ArrowRight size={16} />
-              </Link>
+              </a>
               <Link to="/demo/clinic" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
