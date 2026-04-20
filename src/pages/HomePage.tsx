@@ -53,6 +53,7 @@ function chapterIndexFromProgress(progress: number) {
 export function HomePage() {
   const immersiveRef = useRef<HTMLElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [isMobileFxLite, setIsMobileFxLite] = useState(false)
   const [activeChapter, setActiveChapter] = useState(0)
   const { scrollYProgress } = useScroll({
     target: immersiveRef,
@@ -85,6 +86,13 @@ export function HomePage() {
 
     mq.addListener(onChange)
     return () => mq.removeListener(onChange)
+  }, [])
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const cores = navigator.hardwareConcurrency ?? 8
+    const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8
+    setIsMobileFxLite(reducedMotion || cores <= 4 || memory <= 4)
   }, [])
 
   useEffect(() => {
@@ -230,7 +238,7 @@ export function HomePage() {
 
   return (
     <MarketingLayout>
-      <section ref={immersiveRef} className={`journey-home ${isMobile ? 'is-mobile' : ''}`}>
+      <section ref={immersiveRef} className={`journey-home ${isMobile ? 'is-mobile' : ''} ${isMobileFxLite ? 'mobile-fx-lite' : ''}`}>
         {!isMobile && (
           <motion.div className="journey-stage" style={{ opacity: stageOpacity }}>
             <motion.div className="journey-bg" style={{ scale: bgScale, rotate: bgRotate }} />
@@ -280,6 +288,16 @@ export function HomePage() {
 
         {isMobile && (
           <div className="journey-mobile-flow">
+            <div className="journey-mobile-atmo" aria-hidden="true">
+              <motion.span className="journey-mobile-blob blob-a" style={{ x: worldGlowX }} />
+              <motion.span className="journey-mobile-blob blob-b" style={{ y: worldGridY }} />
+              <motion.span className="journey-mobile-grid" style={{ y: worldGridY }} />
+            </div>
+
+            <motion.div className="journey-mobile-orb" style={{ y: worldOrbY, rotate: worldOrbRotate }}>
+              <ZovenOrbitalMark />
+            </motion.div>
+
             <section className="journey-mobile-hero" id="intro">
               <Badge>ZOVEN RADICI</Badge>
               <h1>Il sistema operativo per agriturismi e aziende agricole.</h1>
@@ -297,12 +315,26 @@ export function HomePage() {
 
             <nav className="journey-mobile-steps" aria-label="Percorso demo">
               {steps.map((step, index) => (
-                <a key={step} href={`#${anchors[index]}`}>{step}</a>
+                <a key={step} href={`#${anchors[index]}`} className={activeChapter === index ? 'active' : ''}>{step}</a>
               ))}
             </nav>
 
+            <div className="journey-mobile-progress" aria-hidden="true">
+              {steps.map((step, index) => (
+                <span key={step} className={`${activeChapter >= index ? 'active' : ''} step-${index + 1}`} />
+              ))}
+            </div>
+
             {hudContent.slice(1).map((chapter, index) => (
-              <article key={anchors[index + 1]} className="journey-mobile-card" id={anchors[index + 1]}>
+              <motion.article
+                key={anchors[index + 1]}
+                className="journey-mobile-card"
+                id={anchors[index + 1]}
+                initial={{ opacity: 0, y: 26, scale: 0.985, rotateX: 6 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ duration: isMobileFxLite ? 0.34 : 0.46, ease: 'easeOut' }}
+              >
                 <Badge>{chapter.kicker}</Badge>
                 <h2>{chapter.title}</h2>
                 <p>{chapter.body}</p>
@@ -320,7 +352,7 @@ export function HomePage() {
                 ) : (
                   <p className="journey-next-step">Continua verso: {steps[index + 2]}</p>
                 )}
-              </article>
+              </motion.article>
             ))}
 
             <div className="journey-mobile-final-link">
